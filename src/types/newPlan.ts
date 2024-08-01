@@ -1,6 +1,4 @@
 import { PLAN_TYPES } from "../constants";
+import { UserPlan } from "../types";
 
-export type NewUserPlan = {
-    name: string;
-    type: (typeof PLAN_TYPES)[number];
-};
+export type NewUserPlan = Omit<UserPlan, 'pk' | 'owner'>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PLAN_TYPES } from "../constants";
 
 import { NewUserPlan } from "../types/newPlan";
@@ -6,16 +6,7 @@ import { NewUserPlan } from "../types/newPlan";
 import { isValidKeyValue } from "../utils";
 import useAddUserPlan from "../api/userPlans/useAddUserPlan";
 import { UserPlan } from "../types";
-
-// type NewPlanFormData = {
-//     name: string;
-//     type: (typeof PLAN_TYPES)[number];
-// };
-
-const INITIAL_FORM_DATA: NewUserPlan = {
-    name: "",
-    type: "Engineer",
-};
+import useEditUserPlan from "../api/userPlans/useEditUserPlan";
 
 interface INewPlan {
     currPlan: UserPlan | null;
@@ -24,7 +15,21 @@ interface INewPlan {
 
 const PlanForm = ({ handleFormOpenClose, currPlan }: INewPlan) => {
     const addPlanMutation = useAddUserPlan(handleFormOpenClose);
-    const [formData, setFormData] = useState(INITIAL_FORM_DATA);
+    const editPlanMutation = useEditUserPlan();
+    const [formData, setFormData] = useState<NewUserPlan>({
+        name: "",
+        type: "Engineer",
+    });
+
+    useEffect(() => {
+        if (currPlan) {
+            setFormData({
+                name: currPlan ? currPlan.name : "",
+                type: currPlan ? currPlan.type : "Engineer",
+            });
+        }
+    }, [currPlan]);
+
     const handleFormDataChange = <T extends keyof NewUserPlan>(key: string, value: NewUserPlan[T]) => {
         if (isValidKeyValue<NewUserPlan>(key, formData)) {
             setFormData({
@@ -40,7 +45,15 @@ const PlanForm = ({ handleFormOpenClose, currPlan }: INewPlan) => {
         if (!formData.name) {
             return;
         }
-        await addPlanMutation.mutateAsync(formData);
+        if (currPlan) {
+            await editPlanMutation.mutateAsync({
+                ...currPlan,
+                ...formData,
+            });
+        } else {
+            await addPlanMutation.mutateAsync(formData);
+        }
+        handleFormOpenClose(false);
     };
 
     return (
@@ -70,7 +83,8 @@ const PlanForm = ({ handleFormOpenClose, currPlan }: INewPlan) => {
                     </option>
                 ))}
             </select>
-            <button type="submit">{currPlan? 'Edit' : 'Create New Plan'}</button>
+            <button type="submit">{currPlan ? "Edit" : "Create New Plan"}</button>
+            <button type='button' onClick={() =>handleFormOpenClose(false)}>Cancel</button>
         </form>
     );
 };

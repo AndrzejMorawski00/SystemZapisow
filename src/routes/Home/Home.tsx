@@ -1,19 +1,28 @@
-import { act, useState } from "react";
+import { useState } from "react";
 import useGetUserPlans from "../../api/userPlans/useGetUserPlans";
+import useDeleteUserPlan from "../../api/userPlans/useDeleteUserPlan";
 import HomeHeader from "./HomeHeader";
-import NewPlan from "../../components/NewPlan";
+import NewPlan from "../../components/PlanForm";
 import { MAX_PLAN_NUMBER } from "../../constants";
 import { UserPlan } from "../../types";
 
 const Home = () => {
     const [displayForm, setDisplayForm] = useState(false);
+    const deleteUserPlanMutation = useDeleteUserPlan();
     const { data, isError: isPlanError, isLoading: isPlanLoading } = useGetUserPlans();
     const [currPlan, setCurrPlan] = useState<UserPlan | null>(null);
-    const handlePlanListButtonClick = (action: "edit" | "delete", plan: UserPlan) => {
+
+    const handleFormOpenClose = (newVal: boolean) => {
+        setDisplayForm(newVal);
+        setCurrPlan(null);
+    };
+
+    const handlePlanListButtonClick = async (action: "edit" | "delete", plan: UserPlan) => {
         if (action === "edit") {
             setCurrPlan(plan);
+            setDisplayForm(true);
         } else if (action === "delete") {
-            // delete
+            await deleteUserPlanMutation.mutateAsync(plan.pk);
         } else {
             throw new Error(`Invalid PlanList action: ${action}`);
         }
@@ -44,8 +53,8 @@ const Home = () => {
                 </ul>
             </div>
             <div>
-                {displayForm || currPlan ? (
-                    <NewPlan handleFormOpenClose={(newVal) => setDisplayForm(newVal)} currPlan={currPlan} />
+                {displayForm ? (
+                    <NewPlan handleFormOpenClose={handleFormOpenClose} currPlan={currPlan} />
                 ) : plans.length < MAX_PLAN_NUMBER ? (
                     <button onClick={() => setDisplayForm(true)}>Create New Plan:</button>
                 ) : (

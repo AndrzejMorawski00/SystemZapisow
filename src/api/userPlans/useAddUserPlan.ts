@@ -20,7 +20,10 @@ const useAddUserPlan = (handleFormOpenClose: (newValue: boolean) => void) => {
             queryClient.invalidateQueries({
                 queryKey: ["plans", "list"],
             });
-            handleFormOpenClose(false)
+            handleFormOpenClose(false);
+        },
+        onError: (error) => {
+            throw new Error(error.message);
         },
     });
 };

@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { apiConfig } from "../apiConfig";
 import { UserPlan } from "../../types";
 
@@ -19,6 +19,7 @@ const useGetUserPlans = () => {
             }
             return response.json();
         },
+        placeholderData: keepPreviousData,
     });
 };
 
