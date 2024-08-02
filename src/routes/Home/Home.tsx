@@ -5,6 +5,7 @@ import HomeHeader from "./HomeHeader";
 import NewPlan from "../../components/PlanForm";
 import { MAX_PLAN_NUMBER } from "../../constants";
 import { UserPlan } from "../../types";
+import { Link } from "react-router-dom";
 
 const Home = () => {
     const [displayForm, setDisplayForm] = useState(false);
@@ -43,7 +44,7 @@ const Home = () => {
                 <ul>
                     {plans.map((plan, idx) => (
                         <li key={idx}>
-                            <p>{plan.name}</p>
+                            <Link to={`/planner/${plan.slug}/`}>{plan.name}</Link>
                             <div>
                                 <button onClick={() => handlePlanListButtonClick("edit", plan)}>Edit</button>
                                 <button onClick={() => handlePlanListButtonClick("delete", plan)}>Delete</button>

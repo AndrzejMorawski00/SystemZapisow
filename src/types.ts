@@ -35,6 +35,7 @@ export type Semester = {
 export type UserPlan = {
     pk: number;
     name: string;
+    slug: string;
     owner: number;
     type: (typeof PLAN_TYPES)[number];
 };

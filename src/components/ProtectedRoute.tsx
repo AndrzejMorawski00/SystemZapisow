@@ -25,14 +25,13 @@ const ProtectedRoute = ({ children }: IProtectedRoute) => {
             setIsAuthorized(false);
             return;
         }
+        console.log(token);
         const decoded = jwtDecode(token);
         const tokenExpiration = decoded.exp ? decoded.exp : -1;
         const now = Date.now() / 1000;
         if (tokenExpiration < now) {
-            console.log("xDD");
             await refreshMutation.mutateAsync();
         } else {
-            console.log("xDD22");
             handleAuthStateChange(true);
         }
     };

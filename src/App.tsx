@@ -6,6 +6,7 @@ import LogoutAndRegister from "./routes/Auth/LogoutAndRegister";
 import Logout from "./routes/Auth/Logout";
 import Home from "./routes/Home/Home";
 import Main from "./routes/Main";
+import Planner from "./routes/Plan/Planner";
 
 const router = createBrowserRouter([
     {
@@ -17,6 +18,14 @@ const router = createBrowserRouter([
         element: (
             <ProtectedRoute>
                 <Home />
+            </ProtectedRoute>
+        ),
+    },
+    {
+        path: "planner/:planSlug",
+        element: (
+            <ProtectedRoute>
+                <Planner />
             </ProtectedRoute>
         ),
     },

@@ -84,7 +84,9 @@ const PlanForm = ({ handleFormOpenClose, currPlan }: INewPlan) => {
                 ))}
             </select>
             <button type="submit">{currPlan ? "Edit" : "Create New Plan"}</button>
-            <button type='button' onClick={() =>handleFormOpenClose(false)}>Cancel</button>
+            <button type="button" onClick={() => handleFormOpenClose(false)}>
+                Cancel
+            </button>
         </form>
     );
 };
