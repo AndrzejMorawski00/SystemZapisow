@@ -19,6 +19,7 @@ const PlanForm = ({ handleFormOpenClose, currPlan }: INewPlan) => {
     const [formData, setFormData] = useState<NewUserPlan>({
         name: "",
         type: "Engineer",
+        create: true,
     });
 
     useEffect(() => {
@@ -26,6 +27,7 @@ const PlanForm = ({ handleFormOpenClose, currPlan }: INewPlan) => {
             setFormData({
                 name: currPlan ? currPlan.name : "",
                 type: currPlan ? currPlan.type : "Engineer",
+                create: true,
             });
         }
     }, [currPlan]);

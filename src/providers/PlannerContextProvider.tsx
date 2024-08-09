@@ -1,18 +1,13 @@
 import { createContext, ReactNode, useState } from "react";
 import { SelectorSettingType } from "../types/selector";
 import { isValidKeyValue } from "../utils";
-
-export type PlannerContextType = {
-    handleFormDataChange: <T extends keyof SelectorSettingType>(key: string, value: SelectorSettingType[T]) => void;
-    handleFilterValueChange: (newValue: string) => void;
-    filterValue: string;
-} & SelectorSettingType;
+import { PlannerContextType } from "../types";
 
 export const PlannerContext = createContext<PlannerContextType | undefined>(undefined);
 
 const INITIAL_FORM_DATA = {
     effect: -1,
-    semester: -1,
+    semester: 28,
     type: -1,
     tag: -1,
 };

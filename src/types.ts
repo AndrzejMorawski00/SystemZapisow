@@ -1,4 +1,5 @@
 import { PLAN_TYPES } from "./constants";
+import { SelectorSettingType } from "./types/selector";
 
 export type Course = {
     id: number;
@@ -8,6 +9,13 @@ export type Course = {
     type: number;
     effects: number[];
     tags: number[];
+};
+
+export type PaginatedResponse<T> = {
+    count: number;
+    next: string | null;
+    previous: string | null;
+    results: T[];
 };
 
 export type CourseEffect = {
@@ -41,3 +49,9 @@ export type UserPlan = {
 };
 
 export type UserSemester = {};
+
+export type PlannerContextType = {
+    handleFormDataChange: <T extends keyof SelectorSettingType>(key: string, value: SelectorSettingType[T]) => void;
+    handleFilterValueChange: (newValue: string) => void;
+    filterValue: string;
+} & SelectorSettingType;

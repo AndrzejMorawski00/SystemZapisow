@@ -17,11 +17,9 @@ const SelectorForm = <T extends { id: number; name: string; shortcut?: string }>
     const [selectData, setSelectData] = useState<number>(currData[keyName]);
 
     const handleSelectDataChange = (value: number) => {
-        console.log("Click", value);
         setSelectData(value);
         handleFormDataChange(keyName, value);
     };
-
     return (
         <select value={selectData} onChange={(e) => handleSelectDataChange(+e.target.value)}>
             {selectData === -1 ? (

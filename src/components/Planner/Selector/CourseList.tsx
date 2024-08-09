@@ -1,24 +1,49 @@
-import useGetCourses from "../../../api/subjects/useGetCourses";
+import React, { useEffect } from "react";
+import useGetInfiniteCourses from "../../../api/courses/useGetInfiniteCourses";
+import { usePlannerContext } from "../../../useContextHooks/usePlannerContext";
+import { getCourseQueryParams } from "../../../utils";
+import { Course } from "../../../types";
+import { useInView } from "react-intersection-observer";
 
-interface ICourseList {
-    filter: string;
-    semesterID: number;
-    filterData: undefined;
-}
+const CourseList: React.FC = () => {
+    const plannerContext = usePlannerContext();
+    const { ref, inView } = useInView();
+    const endpointData = getCourseQueryParams({ ...plannerContext });
+    const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, isError } = useGetInfiniteCourses(
+        plannerContext.semester,
+        endpointData
+    );
 
-const CourseList = ({ filter, semesterID }: ICourseList) => {
-    console.log(filter);
-    const { data, isLoading, isError } = useGetCourses(semesterID);
+    useEffect(() => {
+        if (inView && hasNextPage) {
+            fetchNextPage();
+        }
+    }, [inView, hasNextPage, fetchNextPage]);
+
     if (isLoading) {
-        return <div>Loading...</div>;
+        return <p>Loading...</p>;
     }
 
     if (isError) {
-        return <div>Error...</div>;
+        return <p>Error loading courses</p>;
     }
-    console.log(data);
 
-    return <ul></ul>;
+    return (
+        <ul>
+            {data?.pages.map((page, pageIndex) => (
+                <React.Fragment key={pageIndex}>
+                    {page.results.map((course: Course) => (
+                        <li ref={ref} key={course.id}>
+                            <h2>{course.name}</h2>
+                            <p>ECTS: {course.ects}</p>
+                        </li>
+                    ))}
+                </React.Fragment>
+            ))}
+            {isFetchingNextPage ? <li>Loading more courses...</li> : ""}
+            {!hasNextPage && <li>No more Courses</li>}
+        </ul>
+    );
 };
 
 export default CourseList;

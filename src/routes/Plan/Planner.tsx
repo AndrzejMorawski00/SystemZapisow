@@ -10,10 +10,10 @@ const Planner = () => {
     console.log(planSlug);
     return (
         <PlannerContextProvider>
-            <div>
-                <div>
+            <div className="flex flex-row">
+                <div className="">
                     <CourseSelector />
-                    {/* <CourseList filter="" semesterID={1} /> */}
+                    <CourseList />
                     <PlanInfo />
                 </div>
                 <PlanTable />

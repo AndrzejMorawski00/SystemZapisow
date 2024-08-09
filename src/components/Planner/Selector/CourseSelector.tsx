@@ -1,12 +1,16 @@
 import SelectorModal from "./SelectorForm/SelectorModal";
 import { usePlannerContext } from "../../../useContextHooks/usePlannerContext";
 
+
 const CourseSelector = () => {
-    const { handleFilterValueChange, filterValue, effect, tag, semester, type } = usePlannerContext();
-    console.log(filterValue, effect, tag, semester, type);
+    const plannerContext = usePlannerContext();
     return (
         <form action="">
-            <input type="text" value={filterValue} onChange={(e) => handleFilterValueChange(e.target.value)} />
+            <input
+                type="text"
+                value={plannerContext.filterValue}
+                onChange={(e) => plannerContext.handleFilterValueChange(e.target.value)}
+            />
             <SelectorModal />
         </form>
     );

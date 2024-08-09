@@ -10,14 +10,14 @@ const SelectorSettings = () => {
     const { handleFormDataChange } = usePlannerContext();
     const { data: tags, isError: isTagError, isLoading: isTagLoading } = useGetMetadataList<CourseTag>("tags");
     const {
-        data: types,
-        isError: isTypesError,
-        isLoading: isTypesLoading,
-    } = useGetMetadataList<CourseEffect>("effects");
-    const {
         data: effects,
         isError: isEffectsError,
         isLoading: isEffectsLoading,
+    } = useGetMetadataList<CourseEffect>("effects");
+    const {
+        data: types,
+        isError: isTypesError,
+        isLoading: isTypesLoading,
     } = useGetMetadataList<CourseType>("types");
     const { data: semesters, isError: isSemestersError, isLoading: isSemestersLoading } = useGetSemesters();
 
