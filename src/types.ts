@@ -46,9 +46,16 @@ export type UserPlan = {
     slug: string;
     owner: number;
     type: (typeof PLAN_TYPES)[number];
+    semesters: number[];
 };
 
-export type UserSemester = {};
+export type UserSemester = {
+    id: number;
+    name: string;
+    owner: number;
+    plan: number;
+    courses: Course[];
+};
 
 export type PlannerContextType = {
     handleFormDataChange: <T extends keyof SelectorSettingType>(key: string, value: SelectorSettingType[T]) => void;

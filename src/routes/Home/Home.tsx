@@ -44,7 +44,9 @@ const Home = () => {
                 <ul>
                     {plans.map((plan, idx) => (
                         <li key={idx}>
-                            <Link to={`/planner/${plan.slug}/`}>{plan.name}</Link>
+                            <Link to={`/planner/${plan.slug}/`} state={plan.semesters}>
+                                {plan.name}
+                            </Link>
                             <div>
                                 <button onClick={() => handlePlanListButtonClick("edit", plan)}>Edit</button>
                                 <button onClick={() => handlePlanListButtonClick("delete", plan)}>Delete</button>

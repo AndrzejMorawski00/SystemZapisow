@@ -26,13 +26,18 @@ const ProtectedRoute = ({ children }: IProtectedRoute) => {
             return;
         }
         console.log(token);
-        const decoded = jwtDecode(token);
-        const tokenExpiration = decoded.exp ? decoded.exp : -1;
-        const now = Date.now() / 1000;
-        if (tokenExpiration < now) {
-            await refreshMutation.mutateAsync();
-        } else {
-            handleAuthStateChange(true);
+        try {
+            const decoded = jwtDecode(token);
+            const tokenExpiration = decoded.exp ? decoded.exp : -1;
+            const now = Date.now() / 1000;
+            if (tokenExpiration < now) {
+                await refreshMutation.mutateAsync();
+            } else {
+                handleAuthStateChange(true);
+            }
+        } catch (error) {
+            console.log("Failed to decode token: ", error);
+            setIsAuthorized(false);
         }
     };
     if (isAuthorized === null) {

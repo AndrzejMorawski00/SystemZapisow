@@ -29,11 +29,11 @@ const CourseList: React.FC = () => {
     }
 
     return (
-        <ul>
+        <ul >
             {data?.pages.map((page, pageIndex) => (
                 <React.Fragment key={pageIndex}>
                     {page.results.map((course: Course) => (
-                        <li ref={ref} key={course.id}>
+                        <li className='bg-slate-400 m-2' ref={ref} key={course.id} draggable>
                             <h2>{course.name}</h2>
                             <p>ECTS: {course.ects}</p>
                         </li>
