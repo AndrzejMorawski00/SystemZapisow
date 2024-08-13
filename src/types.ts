@@ -6,9 +6,9 @@ export type Course = {
     name: string;
     ects: number;
     recommended_for_first_year: boolean;
-    type: number;
-    effects: number[];
-    tags: number[];
+    type: CourseType;
+    effects: CourseEffect[];
+    tags: CourseTag[];
 };
 
 export type PaginatedResponse<T> = {
@@ -49,12 +49,20 @@ export type UserPlan = {
     semesters: number[];
 };
 
-export type UserSemester = {
+export type GetUserSemester = {
     id: number;
     name: string;
     owner: number;
     plan: number;
     courses: Course[];
+};
+
+export type EditUserSemester = {
+    id: number;
+    name: string;
+    owner: number;
+    plan: number;
+    courses: number[];
 };
 
 export type PlannerContextType = {

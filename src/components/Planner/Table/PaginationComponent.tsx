@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { UserSemester } from "../../../types";
-import PlanTableRow from "./PlanTableRow";
+import { GetUserSemester } from "../../../types";
+
+import UserSemesterList from "./UserSemesterList";
 
 interface IPaginationContent {
-    semesters: UserSemester[];
+    semesters: GetUserSemester[];
 }
 
 const PaginationComponent = ({ semesters }: IPaginationContent) => {
@@ -26,7 +27,7 @@ const PaginationComponent = ({ semesters }: IPaginationContent) => {
         <div className="flex flex-col gap-2 h-screen w-full justify-between py-2">
             <div className="flex gap-2 justify-between px-3">
                 {pageData.map((semester) => (
-                    <PlanTableRow key={semester.id} semester={semester} />
+                    <UserSemesterList key={semester.id} semester={semester} containerName={semester.name} />
                 ))}
             </div>
             <div>
@@ -34,9 +35,7 @@ const PaginationComponent = ({ semesters }: IPaginationContent) => {
                     Prev
                 </button>
                 <button
-                    disabled={
-                        paginationData.currPage === Math.floor(paginationData.dataSize / paginationData.pageSize) + 1
-                    }
+                    disabled={paginationData.currPage === Math.ceil(paginationData.dataSize / paginationData.pageSize)}
                     onClick={() => handlePageChange(1)}
                 >
                     Next

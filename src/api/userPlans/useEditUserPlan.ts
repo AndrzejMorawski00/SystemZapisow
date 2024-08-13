@@ -14,7 +14,7 @@ const useEditUserPlan = () => {
                 headers,
                 body: JSON.stringify(userPlan),
             });
-            return response.json();
+            return await response.json();
         },
         onSuccess: (_, data) => {
             queryClient.invalidateQueries({
