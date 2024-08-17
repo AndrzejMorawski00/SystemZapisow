@@ -45,7 +45,7 @@ const UserSemesterList = ({ semester }: IPlanTableRowProps) => {
     };
 
     return (
-        <div className=" bg-slate-500">
+        <div className=" bg-slate-500 w-[50%]">
             <p>{semester.name}</p>
             <DropableList
                 courses={semester.courses}

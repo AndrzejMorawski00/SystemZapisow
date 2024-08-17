@@ -1,16 +1,15 @@
 import { useState } from "react";
 import { GetUserSemester } from "../../../types";
-
 import UserSemesterList from "./UserSemesterList";
 
-interface IPaginationContent {
-    semesters: GetUserSemester[];
+interface Props {
+    userSemesters: GetUserSemester[];
 }
 
-const PaginationComponent = ({ semesters }: IPaginationContent) => {
+const PlanTablePaginaton = ({ userSemesters }: Props) => {
     const [paginationData, setPaginationData] = useState({
         currPage: 1,
-        dataSize: semesters.length,
+        dataSize: userSemesters.length,
         pageSize: 2,
     });
 
@@ -22,7 +21,7 @@ const PaginationComponent = ({ semesters }: IPaginationContent) => {
     };
     const start = (paginationData.currPage - 1) * paginationData.pageSize;
     const end = paginationData.currPage * paginationData.pageSize;
-    const pageData = semesters.slice(start, end);
+    const pageData = userSemesters.slice(start, end);
     return (
         <div className="flex flex-col gap-2 h-screen w-full justify-between py-2">
             <div className="flex gap-2 justify-between px-3">
@@ -45,4 +44,4 @@ const PaginationComponent = ({ semesters }: IPaginationContent) => {
     );
 };
 
-export default PaginationComponent;
+export default PlanTablePaginaton;

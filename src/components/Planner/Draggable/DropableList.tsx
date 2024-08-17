@@ -26,11 +26,11 @@ const DropableList = ({ children, containerName, classStyles, handleUserSemester
                     setIsDraggedOver(true);
                 },
                 onDragLeave: () => setIsDraggedOver(false),
-                onDrop: async ({ source }) => {
+                onDrop: ({ source }) => {
                     setIsDraggedOver(false);
                     const courseId: number = Number(source.data.courseId);
                     if (courseId) {
-                        await handleUserSemesterChange(courseId, "add");
+                        handleUserSemesterChange(courseId, "add");
                     }
                 },
             });

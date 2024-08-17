@@ -70,3 +70,31 @@ export type PlannerContextType = {
     handleFilterValueChange: (newValue: string) => void;
     filterValue: string;
 } & SelectorSettingType;
+
+export type StudiesProgressType = {
+    type: "Engineer" | "Bachelor";
+    i_ects: number;
+    iinz_ects: number;
+    kinz_ects: number;
+    oikp_ects: number;
+    project: number;
+    tags: number[];
+    ps: number;
+    practices: number;
+    hs_ects: number;
+    owi_ects: number;
+    e_ects: number;
+};
+
+export type StudiesProgresContextType = {
+    studiesProgress: StudiesProgressType;
+    handleStudiesProgressChange: <T extends keyof Omit<StudiesProgressType, 'type'>>(
+        key: string,
+        value: StudiesProgressType[T]
+    ) => void;
+};
+
+export type StudiesProgressRequirementObject = {
+    tagIdList: number[];
+    keyName: keyof StudiesProgressType;
+};

@@ -1,6 +1,5 @@
 import SelectorModal from "./SelectorForm/SelectorModal";
-import { usePlannerContext } from "../../../useContextHooks/usePlannerContext";
-
+import usePlannerContext from "../../../useContextHooks/usePlannerContext";
 
 const CourseSelector = () => {
     const plannerContext = usePlannerContext();

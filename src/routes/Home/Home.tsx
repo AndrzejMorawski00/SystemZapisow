@@ -44,7 +44,10 @@ const Home = () => {
                 <ul>
                     {plans.map((plan, idx) => (
                         <li key={idx}>
-                            <Link to={`/planner/${plan.slug}/`} state={plan.semesters}>
+                            <Link
+                                to={`/planner/${plan.slug}/`}
+                                state={{ semesterIDList: plan.semesters, planType: plan.type }}
+                            >
                                 {plan.name}
                             </Link>
                             <div>

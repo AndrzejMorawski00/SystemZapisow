@@ -4,7 +4,7 @@ import useGetSemesters from "../../../../api/semesters/useGetSemesters";
 
 import SelectorForm from "./SelectorForm";
 import { SelectorSettingType } from "../../../../types/selector";
-import { usePlannerContext } from "../../../../useContextHooks/usePlannerContext";
+import usePlannerContext from "../../../../useContextHooks/usePlannerContext";
 
 const SelectorSettings = () => {
     const { handleFormDataChange } = usePlannerContext();
@@ -14,11 +14,7 @@ const SelectorSettings = () => {
         isError: isEffectsError,
         isLoading: isEffectsLoading,
     } = useGetMetadataList<CourseEffect>("effects");
-    const {
-        data: types,
-        isError: isTypesError,
-        isLoading: isTypesLoading,
-    } = useGetMetadataList<CourseType>("types");
+    const { data: types, isError: isTypesError, isLoading: isTypesLoading } = useGetMetadataList<CourseType>("types");
     const { data: semesters, isError: isSemestersError, isLoading: isSemestersLoading } = useGetSemesters();
 
     return (

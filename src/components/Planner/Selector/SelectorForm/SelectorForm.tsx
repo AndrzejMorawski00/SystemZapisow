@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { SelectorSettingType } from "../../../../types/selector";
-import { usePlannerContext } from "../../../../useContextHooks/usePlannerContext";
+import usePlannerContext from "../../../../useContextHooks/usePlannerContext";
 
 interface ISelectorForm<T> {
     handleFormDataChange: <K extends keyof SelectorSettingType>(key: string, value: SelectorSettingType[K]) => void;

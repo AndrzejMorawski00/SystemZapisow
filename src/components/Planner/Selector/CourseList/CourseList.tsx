@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import useGetInfiniteCourses from "../../../../api/courses/useGetInfiniteCourses";
-import { usePlannerContext } from "../../../../useContextHooks/usePlannerContext";
+import usePlannerContext from "../../../../useContextHooks/usePlannerContext";
 import { getCourseQueryParams } from "../../../../utils";
 import { useInView } from "react-intersection-observer";
 import CourseItem from "./CourseItem";
@@ -31,7 +31,7 @@ const CourseList = () => {
     }
 
     return (
-        <ul className="overflow-y-scroll max-h-screen">
+        <ul className="overflow-y-scroll">
             {courses.map((course) => (
                 <DragableItem key={course.id} courseId={course.id}>
                     <CourseItem course={course} fetchNextRef={ref} />

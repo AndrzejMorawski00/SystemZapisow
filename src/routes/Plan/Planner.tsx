@@ -1,26 +1,46 @@
 import { useLocation } from "react-router-dom";
 import CourseSelector from "../../components/Planner/Selector/CourseSelector";
-import PlanInfo from "../../components/Planner/PlanInfo";
-import PlanTable from "../../components/Planner/Table/PlanTable";
+
 import CourseList from "../../components/Planner/Selector/CourseList/CourseList";
 import PlannerContextProvider from "../../providers/PlannerContextProvider";
+import StudiesProgressProvider from "../../providers/StudiesProgressProvider";
+import PlanInfoWrapper from "../../components/Planner/PlanInfo/PlanInfoWrapper";
+import useGetUserSemesters from "../../api/userSemesters/useGetUserSemesters";
+import { GetUserSemester } from "../../types";
+import PlanTablePagination from "../../components/Planner/Table/PlanTablePagination";
 
 interface LocationState {
-    state: number[];
+    semesterIDList: number[];
+    planType: "Engineer" | "Bachelor";
 }
 
 const Planner = () => {
-    const location = useLocation() as LocationState;
+    const location = useLocation();
+    const { semesterIDList, planType } = location.state as LocationState;
+    const results = useGetUserSemesters(semesterIDList);
+    const isLoading = results.some((result) => result.isLoading);
+    const isError = results.some((result) => result.isError);
+    const userSemesters = results.map((result) => result.data) as GetUserSemester[];
+    let content;
+
+    if (isLoading) content = <div>Loading...</div>;
+
+    if (isError) content = <div>Error loading data</div>;
+
     return (
         <PlannerContextProvider>
-            <div className="flex flex-row flex-grow">
-                <div className="">
-                    <CourseSelector />
-                    <CourseList />
-                    <PlanInfo />
-                </div>
-                <PlanTable semesterIDList={location.state} />
-            </div>
+            <StudiesProgressProvider studiesType={planType}>
+                <>
+                    <div className="flex flex-row">
+                        <div className="flex flex-col gap-1 max-h-screen py-2">
+                            <CourseSelector />
+                            <CourseList />
+                            <PlanInfoWrapper userSemesters={userSemesters} planType={planType} />
+                        </div>
+                        {content ? content : <PlanTablePagination userSemesters={userSemesters} />}
+                    </div>
+                </>
+            </StudiesProgressProvider>
         </PlannerContextProvider>
     );
 };
