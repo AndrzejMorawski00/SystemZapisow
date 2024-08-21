@@ -1,24 +1,21 @@
 import { useEffect, useState } from "react";
-import { PLAN_TYPES } from "../constants";
-
-import { NewUserPlan } from "../types/newPlan";
-
-import { isValidKeyValue } from "../utils";
 import useAddUserPlan from "../api/userPlans/useAddUserPlan";
-import { UserPlan } from "../types";
 import useEditUserPlan from "../api/userPlans/useEditUserPlan";
+import { NewUserPlan, UserPlan } from "../types/planTypes";
+import { PLAN_TYPES } from "../constants/studiesProgress";
+import { isValidKeyValue } from "../utils/utils";
 
-interface INewPlan {
+interface Props {
     currPlan: UserPlan | null;
     handleFormOpenClose: (newVal: boolean) => void;
 }
 
-const PlanForm = ({ handleFormOpenClose, currPlan }: INewPlan) => {
+const PlanForm = ({ handleFormOpenClose, currPlan }: Props) => {
     const addPlanMutation = useAddUserPlan(handleFormOpenClose);
     const editPlanMutation = useEditUserPlan();
     const [formData, setFormData] = useState<NewUserPlan>({
         name: "",
-        type: "Engineer",
+        type: "Inżynierskie",
         create: true,
     });
 
@@ -26,7 +23,7 @@ const PlanForm = ({ handleFormOpenClose, currPlan }: INewPlan) => {
         if (currPlan) {
             setFormData({
                 name: currPlan ? currPlan.name : "",
-                type: currPlan ? currPlan.type : "Engineer",
+                type: currPlan ? currPlan.type : "Inżynierskie",
                 create: true,
             });
         }
@@ -60,12 +57,14 @@ const PlanForm = ({ handleFormOpenClose, currPlan }: INewPlan) => {
 
     return (
         <form
+            className="flex flex-col gap-4"
             onSubmit={(e) => {
                 e.preventDefault();
                 handleFormSubmit();
             }}
         >
             <input
+                className="FormInput focus:outline-none"
                 type="text"
                 name="name"
                 id="name"
@@ -74,6 +73,7 @@ const PlanForm = ({ handleFormOpenClose, currPlan }: INewPlan) => {
                 placeholder="name"
             />
             <select
+                className="FormInput focus:outline-none "
                 name="type"
                 id="type"
                 value={formData.type}
@@ -85,9 +85,18 @@ const PlanForm = ({ handleFormOpenClose, currPlan }: INewPlan) => {
                     </option>
                 ))}
             </select>
-            <button type="submit">{currPlan ? "Edit" : "Create New Plan"}</button>
-            <button type="button" onClick={() => handleFormOpenClose(false)}>
-                Cancel
+            <button
+                className="tracking-wide text-4xl text-white mt-6 px-6 pt-3 pb-4 rounded-full bg-slate-700 border-2 transition hover:scale-[102%] hover:bg-slate-800 hover:text-gray-100 BoxShadow"
+                type="submit"
+            >
+                {currPlan ? "Zapisz" : "Dodaj"}
+            </button>
+            <button
+                className="tracking-wide text-4xl text-white mt-6 px-6 pt-3 pb-4 rounded-full bg-slate-700 border-2 transition hover:scale-[102%] hover:bg-slate-800 hover:text-gray-100 BoxShadow"
+                type="button"
+                onClick={() => handleFormOpenClose(false)}
+            >
+                Anuluj
             </button>
         </form>
     );

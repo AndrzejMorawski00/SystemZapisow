@@ -1,10 +1,11 @@
 import { useEffect } from "react";
 import useGetInfiniteCourses from "../../../../api/courses/useGetInfiniteCourses";
 import usePlannerContext from "../../../../useContextHooks/usePlannerContext";
-import { getCourseQueryParams } from "../../../../utils";
+
 import { useInView } from "react-intersection-observer";
 import CourseItem from "./CourseItem";
 import DragableItem from "../../Draggable/DragableItem";
+import { getCourseQueryParams } from "../../../../utils/api/getCourseQueryParams";
 
 const CourseList = () => {
     const plannerContext = usePlannerContext();
@@ -29,12 +30,11 @@ const CourseList = () => {
     if (isError) {
         return <p>Error loading courses</p>;
     }
-
     return (
         <ul className="overflow-y-scroll">
-            {courses.map((course) => (
-                <DragableItem key={course.id} courseId={course.id}>
-                    <CourseItem course={course} fetchNextRef={ref} />
+            {courses.map((course, idx) => (
+                <DragableItem key={idx} courseId={course.id}>
+                    <CourseItem key={idx} course={course} fetchNextRef={ref} />
                 </DragableItem>
             ))}
 

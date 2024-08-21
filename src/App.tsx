@@ -7,19 +7,23 @@ import Logout from "./routes/Auth/Logout";
 import Home from "./routes/Home/Home";
 import Main from "./routes/Main";
 import Planner from "./routes/Plan/Planner";
+import ErrorRoute from "./routes/ErrorRoute";
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: <Main />,
-    },
-    {
-        path: "home/",
-        element: (
-            <ProtectedRoute>
-                <Home />
-            </ProtectedRoute>
-        ),
+        errorElement: <ErrorRoute />,
+        children: [
+            {
+                path: "home/",
+                element: (
+                    <ProtectedRoute>
+                        <Home />
+                    </ProtectedRoute>
+                ),
+            },
+        ],
     },
     {
         path: "planner/:planSlug",
@@ -29,6 +33,7 @@ const router = createBrowserRouter([
             </ProtectedRoute>
         ),
     },
+
     {
         path: "login/",
         element: <Login />,
@@ -44,23 +49,6 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-    // const data1 = useGetMetadataList("types");
-    // const data2 = useGetMetadataList("tags");
-    // const data3 = useGetMetadataList("effects");
-    // const data4 = useGetSemesters();
-    // const data5 = useGetCourses(16);
-    // console.log("Types: ", data1.data);
-    // console.log("Tags: ", data2.data);
-    // console.log("Effects: ", data3.data);
-    // console.log("Semesters: ", data4.data);
-    // console.log("Courses: ", data5.data);
-    // const obj = useAuth();
-    // useEffect(() => {
-    //     obj.registerMutation.mutateAsync({
-    //         username: "xdd",
-    //         password: "dsadasd",
-    //     });
-    // }, []);
     return <RouterProvider router={router} />;
 }
 

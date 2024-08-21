@@ -1,4 +1,5 @@
-import { StudiesProgressType } from "../../../types";
+// import { StudiesProgressType } from "../../../types";
+import { StudiesProgressType } from "../../../types/providers";
 import ECTERequirementLabel from "./ECTERequirementLabel";
 
 interface Props {
@@ -7,7 +8,7 @@ interface Props {
 }
 
 const ECTSRequirements = ({ requirements, studiesProgress }: Props) => {
-    const isEng = studiesProgress.type === "Engineer" ? true : false;
+    const isEng = studiesProgress.type === "Inżynierskie" ? true : false;
 
     return (
         <div>

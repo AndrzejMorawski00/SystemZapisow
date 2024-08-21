@@ -1,8 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { NewUserPlan } from "../../types/newPlan";
+import { NewUserPlan } from "../../types/planTypes";
+import { apiConfig } from "../../utils/api/apiConfig";
 const apiLink = import.meta.env.VITE_API_URL;
-
-import { apiConfig } from "../apiConfig";
 
 const useAddUserPlan = (handleFormOpenClose: (newValue: boolean) => void) => {
     const queryClient = useQueryClient();
@@ -14,7 +13,11 @@ const useAddUserPlan = (handleFormOpenClose: (newValue: boolean) => void) => {
                 headers,
                 body: JSON.stringify(planData),
             });
-            return response.json();
+            if (!response.ok) {
+                throw new Error(`Failed to add new UserPlan`);
+            }
+            const data = await response.json();
+            return data;
         },
         onSuccess: () => {
             queryClient.invalidateQueries({

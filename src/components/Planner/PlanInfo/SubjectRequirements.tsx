@@ -1,4 +1,4 @@
-import { StudiesProgressType } from "../../../types";
+import { StudiesProgressType } from "../../../types/providers";
 import SubjectRequirement from "./SubjectRequirement";
 
 interface Props {
@@ -7,7 +7,7 @@ interface Props {
 }
 
 const SubjectRequirements = ({ requirements, studiesProgress }: Props) => {
-    const isEng = studiesProgress.type === "Engineer" ? true : false;
+    const isEng = studiesProgress.type === "Inżynierskie" ? true : false;
     return (
         <div className="flex flex-row w-full justify-around">
             <div className="flex flex-row">

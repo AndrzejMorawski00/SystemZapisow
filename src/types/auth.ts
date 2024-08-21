@@ -1,19 +1,19 @@
-export type LoginFormDataType = {
+export type LoginFormData = {
     username: string;
     password: string;
 
 };
-export type RegisterFormDataType = {
+export type RegisterFormData = {
     username: string;
     password: string;
     repeatPassword: string;
 };
 
-export type RegisterFormDataTypeKey = keyof RegisterFormDataType
+export type RegisterFormDataTypeKey = keyof RegisterFormData
 
 export type ValidationRule = {
     message: string;
-    validationFn: (formData : RegisterFormDataType) => boolean;
+    validationFn: (formData : RegisterFormData) => boolean;
 };
 
 export type ValidationRulesNames =

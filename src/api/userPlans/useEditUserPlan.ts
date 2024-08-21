@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 const apiLink = import.meta.env.VITE_API_URL;
 
-import { apiConfig } from "../apiConfig";
+import { apiConfig } from "../../utils/api/apiConfig";
 import { UserPlan } from "../../types";
 
 const useEditUserPlan = () => {
@@ -14,7 +14,7 @@ const useEditUserPlan = () => {
                 headers,
                 body: JSON.stringify(userPlan),
             });
-            return await response.json();
+            return response.json();
         },
         onSuccess: (_, data) => {
             queryClient.invalidateQueries({

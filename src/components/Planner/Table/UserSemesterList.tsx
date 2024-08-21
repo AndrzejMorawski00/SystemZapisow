@@ -1,36 +1,15 @@
 import useEditUserSemester from "../../../api/userSemesters/useEditUserSemester";
-import { Course, GetUserSemester } from "../../../types";
-import DragableItem from "../Draggable/DragableItem";
+import { GetUserSemester } from "../../../types/planTypes";
+import { getNewUserSemesterCourses } from "../../../utils/Table/getNewUserSemesterCourses";
 import DropableList from "../Draggable/DropableList";
-import CourseItem from "../Selector/CourseList/CourseItem";
+import PlanTableCourse from "./PlanTableCourse";
 
-interface IPlanTableRowProps {
+interface Props {
     semester: GetUserSemester;
     containerName: string;
 }
 
-const getNewUserSemesterCourses = (
-    courses: Course[],
-    courseId: number,
-    action: "add" | "remove"
-): { update: boolean; newCourses: number[] } => {
-    let prevCourses = courses.map((course) => course.id);
-    switch (action) {
-        case "add": {
-            if (prevCourses.includes(courseId)) {
-                return { update: false, newCourses: [...prevCourses] };
-            } else {
-                return { update: true, newCourses: [...prevCourses, courseId] };
-            }
-        }
-        case "remove":
-            return { update: true, newCourses: prevCourses.filter((id) => id !== courseId) };
-        default:
-            throw new Error(`Invalid action ${action}`);
-    }
-};
-
-const UserSemesterList = ({ semester }: IPlanTableRowProps) => {
+const UserSemesterList = ({ semester }: Props) => {
     const editUserSemesterMutation = useEditUserSemester();
 
     const handleUserSemesterChange = async (courseId: number, action: "add" | "remove") => {
@@ -54,10 +33,12 @@ const UserSemesterList = ({ semester }: IPlanTableRowProps) => {
                 semesterId={semester.id}
                 handleUserSemesterChange={handleUserSemesterChange}
             >
-                {semester.courses.map((course, idx) => (
-                    <DragableItem key={course.id} courseId={idx}>
-                        <CourseItem course={course} />
-                    </DragableItem>
+                {semester.courses.map((course) => (
+                    <PlanTableCourse
+                        key={course.id}
+                        course={course}
+                        handleUserSemesterChange={handleUserSemesterChange}
+                    />
                 ))}
             </DropableList>
         </div>

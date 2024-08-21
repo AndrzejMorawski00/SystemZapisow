@@ -1,5 +1,5 @@
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
-import { apiConfig } from "../apiConfig";
+import { apiConfig } from "../../utils/api/apiConfig";
 import { UserPlan } from "../../types";
 
 const apiLink = import.meta.env.VITE_API_URL;

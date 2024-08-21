@@ -1,14 +1,15 @@
-import { BAC_REQUIREMENTS, ENG_REQUIREMENTS } from "../../../constants";
-import { StudiesProgressType } from "../../../types";
+import { BAC_REQUIREMENTS, ENG_REQUIREMENTS } from "../../../constants/studiesProgress";
+import { StudiesProgressType } from "../../../types/providers";
+// import { StudiesProgressType } from "../../../types";
 import ECTSRequirements from "./ECTSRequirements";
 import SubjectRequirements from "./SubjectRequirements";
 import TagRequirements from "./TagsRequirements";
 
-const getStudiaRequirements = (studiesType: "Engineer" | "Bachelor"): StudiesProgressType => {
+const getStudiaRequirements = (studiesType: "Licencjackie" | "Inżynierskie"): StudiesProgressType => {
     switch (studiesType) {
-        case "Engineer":
+        case "Inżynierskie":
             return ENG_REQUIREMENTS;
-        case "Bachelor":
+        case "Licencjackie":
             return BAC_REQUIREMENTS;
         default:
             throw new Error(`Invalid Studies Type: ${studiesType}`);
@@ -26,7 +27,7 @@ const PlanInfo = ({ studiesProgress }: Props) => {
             <ECTSRequirements requirements={requirements} studiesProgress={studiesProgress} />
             <SubjectRequirements requirements={requirements} studiesProgress={studiesProgress} />
             <div>
-                <p>Tags:</p>
+                <p>Tagi:</p>
                 <TagRequirements requirements={requirements} studiesProgress={studiesProgress} />
             </div>
         </div>

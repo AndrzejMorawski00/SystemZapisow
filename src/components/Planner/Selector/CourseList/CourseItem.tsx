@@ -1,4 +1,5 @@
-import { Course } from "../../../../types";
+import { Course } from "../../../../types/courseTypes";
+import CourseLabelItem from "./CourseLabelItem";
 
 interface Props {
     course: Course;
@@ -37,11 +38,3 @@ const CourseItem = ({ course, fetchNextRef }: Props) => {
 };
 
 export default CourseItem;
-
-interface CourseLabelItemProps {
-    label: string;
-    color: string;
-}
-const CourseLabelItem = ({ label, color }: CourseLabelItemProps) => {
-    return <div className={`text-white bg-red-600 tracking-wider px-2 py-1 rounded-2xl w-fit ${color}`}>{label}</div>;
-};

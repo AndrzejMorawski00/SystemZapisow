@@ -1,7 +1,7 @@
 import { createContext, ReactNode, useState } from "react";
 import { SelectorSettingType } from "../types/selector";
-import { isValidKeyValue } from "../utils";
-import { PlannerContextType } from "../types";
+import { PlannerContextType } from "../types/providers";
+import { isValidKeyValue } from "../utils/utils";
 
 export const PlannerContext = createContext<PlannerContextType | undefined>(undefined);
 

@@ -1,9 +1,8 @@
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import CourseSelector from "../../components/Planner/Selector/CourseSelector";
 
 import CourseList from "../../components/Planner/Selector/CourseList/CourseList";
 import PlannerContextProvider from "../../providers/PlannerContextProvider";
-import StudiesProgressProvider from "../../providers/StudiesProgressProvider";
 import PlanInfoWrapper from "../../components/Planner/PlanInfo/PlanInfoWrapper";
 import useGetUserSemesters from "../../api/userSemesters/useGetUserSemesters";
 import { GetUserSemester } from "../../types";
@@ -21,26 +20,27 @@ const Planner = () => {
     const isLoading = results.some((result) => result.isLoading);
     const isError = results.some((result) => result.isError);
     const userSemesters = results.map((result) => result.data) as GetUserSemester[];
-    let content;
 
-    if (isLoading) content = <div>Loading...</div>;
+    if (isLoading) return <div>Loading...</div>;
 
-    if (isError) content = <div>Error loading data</div>;
+    if (isError) return <div>Error loading data</div>;
 
     return (
         <PlannerContextProvider>
-            <StudiesProgressProvider studiesType={planType}>
-                <>
-                    <div className="flex flex-row">
-                        <div className="flex flex-col gap-1 max-h-screen py-2">
-                            <CourseSelector />
-                            <CourseList />
-                            <PlanInfoWrapper userSemesters={userSemesters} planType={planType} />
-                        </div>
-                        {content ? content : <PlanTablePagination userSemesters={userSemesters} />}
-                    </div>
-                </>
-            </StudiesProgressProvider>
+            <div className="flex flex-row w-screen h-screen">
+                <div className="flex flex-col gap-1 max-h-screen min-w-[30vw] py-2">
+                    <CourseSelector />
+                    <CourseList />
+                    <PlanInfoWrapper userSemesters={userSemesters} planType={planType} />
+                </div>
+                <div className="w-full h-full">
+                    <header className="flex w-full justify-end">
+                        <Link to="/home/">Powrót</Link>
+                        <Link to="/logout/">Wyloguj się</Link>
+                    </header>
+                    <PlanTablePagination userSemesters={userSemesters} />
+                </div>
+            </div>
         </PlannerContextProvider>
     );
 };

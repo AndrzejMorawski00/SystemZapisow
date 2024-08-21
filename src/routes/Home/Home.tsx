@@ -1,11 +1,10 @@
 import { useState } from "react";
 import useGetUserPlans from "../../api/userPlans/useGetUserPlans";
 import useDeleteUserPlan from "../../api/userPlans/useDeleteUserPlan";
-import HomeHeader from "./HomeHeader";
-import NewPlan from "../../components/PlanForm";
-import { MAX_PLAN_NUMBER } from "../../constants";
-import { UserPlan } from "../../types";
-import { Link } from "react-router-dom";
+import PlanForm from "../../components/PlanForm";
+import PlanItem from "../../components/Home/PlanItem";
+import { UserPlan } from "../../types/planTypes";
+import { MAX_PLAN_NUMBER } from "../../constants/semesterData";
 
 const Home = () => {
     const [displayForm, setDisplayForm] = useState(false);
@@ -29,40 +28,33 @@ const Home = () => {
         }
     };
 
-    let content;
     if (isPlanLoading) {
-        content = <p>Loading...</p>;
+        return (
+            <div className="w-full h-full flex items-center justify-center">
+                <p className="text-3xl text-white tracking-wide">Ładowanie...</p>
+            </div>
+        );
     }
     if (isPlanError) {
-        content = <p>Someting Went Wrong...</p>;
+        return (
+            <div className="w-full h-full flex items-center justify-center">
+                <p className="text-3xl text-white tracking-wide">Coś poszło nie tak...</p>
+            </div>
+        );
     }
     const plans = data ? data : [];
     return (
-        <div>
-            <HomeHeader />
-            <div>
-                <ul>
-                    {plans.map((plan, idx) => (
-                        <li key={idx}>
-                            <Link
-                                to={`/planner/${plan.slug}/`}
-                                state={{ semesterIDList: plan.semesters, planType: plan.type }}
-                            >
-                                {plan.name}
-                            </Link>
-                            <div>
-                                <button onClick={() => handlePlanListButtonClick("edit", plan)}>Edit</button>
-                                <button onClick={() => handlePlanListButtonClick("delete", plan)}>Delete</button>
-                            </div>
-                        </li>
-                    ))}
-                </ul>
-            </div>
-            <div>
+        <div className="flex w-full h-full items-center justify-center gap-4">
+            <ul className="flex flex-col gap-2 divide-y-2 items-end border-r-2 border-white mr-5 pr-5 min-w-[25vw]">
+                {plans.map((plan, idx) => (
+                    <PlanItem key={idx} plan={plan} handlePlanListButtonClick={handlePlanListButtonClick} />
+                ))}
+            </ul>
+            <div className=" flex flex-col gap-2 items-start  min-w-[25vw]">
                 {displayForm ? (
-                    <NewPlan handleFormOpenClose={handleFormOpenClose} currPlan={currPlan} />
+                    <PlanForm handleFormOpenClose={handleFormOpenClose} currPlan={currPlan} />
                 ) : plans.length < MAX_PLAN_NUMBER ? (
-                    <button onClick={() => setDisplayForm(true)}>Create New Plan:</button>
+                    <button className="tracking-wide text-4xl text-white px-8 pt-3 pb-4 rounded-full bg-slate-700 border-2 transition hover:scale-[102%] hover:bg-slate-800 hover:text-gray-100" onClick={() => setDisplayForm(true)}>Nowy Plan</button>
                 ) : (
                     ""
                 )}

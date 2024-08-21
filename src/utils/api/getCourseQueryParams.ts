@@ -1,8 +1,4 @@
-import { PlannerContextType } from "./types";
-
-export const isValidKeyValue = <T extends Object>(s: string, obj: T): boolean => {
-    return s in obj;
-};
+import { PlannerContextType } from "../../types/providers";
 
 const getCourseQueryParam = (paramName: string, paramValue: number): string => {
     if (paramValue === -1) {

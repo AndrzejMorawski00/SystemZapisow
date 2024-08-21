@@ -1,5 +1,6 @@
 import useGetMetadataList from "../../../api/metadata/useGetMetadataList";
-import { CourseTag, StudiesProgressType } from "../../../types";
+import { CourseTag } from "../../../types/courseTypes";
+import { StudiesProgressType } from "../../../types/providers";
 
 interface Props {
     requirements: StudiesProgressType;
@@ -17,7 +18,7 @@ const TagRequirements = ({ requirements, studiesProgress }: Props) => {
     if (isLoading) {
         return (
             <div>
-                <p>Loading...</p>
+                <p>Ładowanie...</p>
             </div>
         );
     }
@@ -25,7 +26,7 @@ const TagRequirements = ({ requirements, studiesProgress }: Props) => {
     if (isError) {
         return (
             <div>
-                <p>Something went Wrong</p>
+                <p>Coś poszło nie tak...</p>
             </div>
         );
     }

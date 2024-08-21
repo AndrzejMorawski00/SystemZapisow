@@ -2,17 +2,17 @@ import { useState } from "react";
 import { SelectorSettingType } from "../../../../types/selector";
 import usePlannerContext from "../../../../useContextHooks/usePlannerContext";
 
-interface ISelectorForm<T> {
+interface Props<MetadataType> {
     handleFormDataChange: <K extends keyof SelectorSettingType>(key: string, value: SelectorSettingType[K]) => void;
-    data: T[];
+    data: MetadataType[];
     keyName: "tag" | "effect" | "semester" | "type";
 }
 
-const SelectorForm = <T extends { id: number; name: string; shortcut?: string }>({
+const SelectorForm = <MetadataType extends { id: number; name: string; shortcut?: string }>({
     handleFormDataChange,
     data,
     keyName,
-}: ISelectorForm<T>) => {
+}: Props<MetadataType>) => {
     const currData = usePlannerContext();
     const [selectData, setSelectData] = useState<number>(currData[keyName]);
 

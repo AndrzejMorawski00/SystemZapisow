@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { apiConfig } from "../apiConfig";
+import { apiConfig } from "../../utils/api/apiConfig";
 
 import { EditUserSemester } from "../../types";
 

@@ -1,14 +1,9 @@
-import { StudiesProgressRequirementObject, StudiesProgressType } from "./types";
+import { StudiesProgressRequirementObject, StudiesProgressType } from "../types/providers";
 
-export const REFRESH_TOKEN = "refresh_token";
-export const ACCESS_TOKEN = "access_token";
-export const MAX_PLAN_NUMBER = 3;
-export const MAX_SEMESTER_NUMBER = 10;
-
-export const PLAN_TYPES = ["Engineer", "Bachelor"] as const;
+export const PLAN_TYPES = ["Inżynierskie", "Licencjackie"] as const;
 
 export const BAC_REQUIREMENTS: StudiesProgressType = {
-    type: "Bachelor",
+    type: "Licencjackie",
     i_ects: 54,
     iinz_ects: 0,
     kinz_ects: 0,
@@ -23,7 +18,7 @@ export const BAC_REQUIREMENTS: StudiesProgressType = {
 };
 
 export const ENG_REQUIREMENTS: StudiesProgressType = {
-    type: "Engineer",
+    type: "Inżynierskie",
     i_ects: 66,
     iinz_ects: 12,
     kinz_ects: 10,
@@ -53,31 +48,31 @@ export const INITIAL_STUDIES_REQUIREMENTS: Omit<StudiesProgressType, "type"> = {
 
 export const REQUIREMENT_ID_MAPPING: StudiesProgressRequirementObject[] = [
     {
-        tagIdList: [1, 5, 6, 7, 39, 38],
+        types: [1, 5, 6, 7, 39, 38],
         keyName: "i_ects",
     },
     {
-        tagIdList: [7],
+        types: [7],
         keyName: "iinz_ects",
     },
     {
-        tagIdList: [40],
+        types: [40],
         keyName: "kinz_ects",
     },
     {
-        tagIdList: [1, 5, 6, 7, 8, 9, 10, 12, 13, 36, 37, 38, 39, 40],
+        types: [1, 5, 6, 7, 8, 9, 10, 12, 13, 36, 37, 38, 39, 40],
         keyName: "oikp_ects",
     },
     {
-        tagIdList: [13],
+        types: [13],
         keyName: "project",
     },
     {
-        tagIdList: [14, 41],
+        types: [14, 41],
         keyName: "ps",
     },
     {
-        tagIdList: [42],
+        types: [42],
         keyName: "hs_ects",
     },
 ];

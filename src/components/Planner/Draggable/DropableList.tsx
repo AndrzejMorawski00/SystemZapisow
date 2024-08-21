@@ -1,7 +1,7 @@
 import { ReactNode, useEffect, useRef, useState } from "react";
 
 import { dropTargetForElements } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
-import { Course } from "../../../types";
+import { Course } from "../../../types/courseTypes";
 
 interface Props {
     children: ReactNode;

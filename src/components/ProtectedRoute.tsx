@@ -1,19 +1,19 @@
 import { ReactNode, useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import useRefreshToken from "../api/auth/useRefreshToken";
-import { ACCESS_TOKEN } from "../constants";
-import { jwtDecode } from "jwt-decode";
+import { isJWTTokenValid } from "../utils/Auth/isJWTTokenValid";
+import { ACCESS_TOKEN } from "../constants/auth";
 
-interface IProtectedRoute {
+interface Props {
     children: ReactNode;
 }
 
-const ProtectedRoute = ({ children }: IProtectedRoute) => {
+const ProtectedRoute = ({ children }: Props) => {
     const [isAuthorized, setIsAuthorized] = useState<null | boolean>(null);
     const handleAuthStateChange = (newVal: boolean) => {
         setIsAuthorized(newVal);
     };
-    const refreshMutation = useRefreshToken(handleAuthStateChange);
+    const refreshTokenMutation = useRefreshToken(handleAuthStateChange);
 
     useEffect(() => {
         auth();
@@ -25,19 +25,10 @@ const ProtectedRoute = ({ children }: IProtectedRoute) => {
             setIsAuthorized(false);
             return;
         }
-        console.log(token);
-        try {
-            const decoded = jwtDecode(token);
-            const tokenExpiration = decoded.exp ? decoded.exp : -1;
-            const now = Date.now() / 1000;
-            if (tokenExpiration < now) {
-                await refreshMutation.mutateAsync();
-            } else {
-                handleAuthStateChange(true);
-            }
-        } catch (error) {
-            console.log("Failed to decode token: ", error);
-            setIsAuthorized(false);
+        if (isJWTTokenValid(token)) {
+            setIsAuthorized(true);
+        } else {
+            (await refreshTokenMutation).mutateAsync();
         }
     };
     if (isAuthorized === null) {

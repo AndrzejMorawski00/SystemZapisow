@@ -1,3 +1,5 @@
+import ErrorMessages from "../components/ErrorMessages/ErrorMessages";
+import ErrorMessagesProvider from "./ErrorMessagesProvider";
 import QueryProvider from "./QueryProvider";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
@@ -8,10 +10,14 @@ interface IProviders {
 const Providers = ({ children }: IProviders) => {
     return (
         <QueryProvider>
-            <>
-                {children}
-                <ReactQueryDevtools />
-            </>
+            <ErrorMessagesProvider>
+                <ErrorMessages>
+                    <>
+                        {children}
+                        <ReactQueryDevtools />
+                    </>
+                </ErrorMessages>
+            </ErrorMessagesProvider>
         </QueryProvider>
     );
 };

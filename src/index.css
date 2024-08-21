@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Dialog */
 .DialogOverlay {
     background-color: rgba(0, 0, 0, 0.8);
     position: fixed;
@@ -23,4 +24,18 @@
     width: auto;
     padding: 25px;
     animation: contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Form Input */
+.FormInput {
+    @apply bg-slate-700;
+    margin-top: 2rem;
+    font-size: 2rem;
+    padding: 0.5rem 1rem;
+    color: white;
+    border-bottom: 3px solid cyan;
+}
+
+.BoxShadow {
+    box-shadow: 15px 18px 10px -13px rgb(0, 0, 0, 0.5);
 }

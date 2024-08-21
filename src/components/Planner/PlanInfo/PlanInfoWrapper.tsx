@@ -2,43 +2,18 @@ import { useState } from "react";
 
 import ReusableModal from "../../ReusableModal/ReusableModal";
 import PlanInfo from "./PlanInfo";
-import { GetUserSemester, StudiesProgressType } from "../../../types";
-import { INITIAL_STUDIES_REQUIREMENTS } from "../../../constants";
+import { StudiesProgressHandler } from "../../../utils/PlanInfo/StudiesProgressHandler";
+import { GetUserSemester } from "../../../types/planTypes";
+import { PLAN_TYPES } from "../../../constants/studiesProgress";
 
 interface Props {
     userSemesters: GetUserSemester[];
-    planType: "Engineer" | "Bachelor";
+    planType: (typeof PLAN_TYPES)[number];
 }
-
-const getInitialStudiesData = (studiesType: "Engineer" | "Bachelor"): StudiesProgressType => {
-    switch (studiesType) {
-        case "Engineer":
-            return {
-                type: "Engineer",
-                ...INITIAL_STUDIES_REQUIREMENTS,
-            };
-        case "Bachelor":
-            return {
-                type: "Bachelor",
-                ...INITIAL_STUDIES_REQUIREMENTS,
-            };
-        default:
-            throw new Error(`Invalid studies Type: ${studiesType}`);
-    }
-};
-
-const getStudiesProgress = (
-    userSemesters: GetUserSemester[],
-    planType: "Engineer" | "Bachelor"
-): StudiesProgressType => {
-    const studiesProgress = getInitialStudiesData(planType);
-    return studiesProgress;
-};
 
 const PlanInfoWrapper = ({ userSemesters, planType }: Props) => {
     const [open, setOpen] = useState(false);
-
-    const studiesProgress = getStudiesProgress(userSemesters, planType);
+    const studiesProgress = new StudiesProgressHandler(userSemesters, planType).getStudiesProgress();
 
     return (
         <ReusableModal open={open} onOpenChange={(newOpen) => setOpen(newOpen)}>
@@ -55,28 +30,3 @@ const PlanInfoWrapper = ({ userSemesters, planType }: Props) => {
 };
 
 export default PlanInfoWrapper;
-
-// const studiesProgress: StudiesProgressType = getInitialStudiesData(planType);
-
-// const updateUserStudiesECTSProgress = (course: Course) => {
-//     REQUIREMENT_ID_MAPPING.forEach((item) => {
-//         if (item.tagIdList.includes(course.id)) {
-//             handleStudiesProgressChange(item.keyName, course.ects);
-//         }
-//     });
-// };
-
-// const updateUserStudiesTagsProgress = (courseTags: number[]) => {
-//     handleStudiesProgressChange("tags", courseTags);
-// };
-// const updateUserStudiesProgress = (course: Course) => {
-//     const courseTags = course.tags.map((tag) => tag.id);
-//     updateUserStudiesECTSProgress(course);
-//     updateUserStudiesTagsProgress(courseTags);
-//     if (courseTags.includes(5)) {
-//         handleStudiesProgressChange("e_ects", course.ects);
-//     }
-//     if (course.name.includes("własności")) {
-//         handleStudiesProgressChange("owi_ects", course.ects);
-//     }
-// };

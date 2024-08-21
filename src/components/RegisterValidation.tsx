@@ -1,52 +1,31 @@
 import { useEffect } from "react";
-import { RegisterFormDataType, ValidationRule } from "../types/auth";
+import { validationRules } from "../constants/register";
+import { RegisterFormData } from "../types/auth";
 
-interface IPasswordValidation {
-    formData: RegisterFormDataType;
+interface Props {
+    formData: RegisterFormData;
     handleFormValidChange: (newVal: boolean) => void;
 }
-
-const validationRules: ValidationRule[] = [
-    {
-        message: "Username has more than 5 characters",
-        validationFn: ({ username }) => username.length > 5,
-    },
-    {
-        message: "Password has more than 8 characters",
-        validationFn: ({ password }) => password.length > 8,
-    },
-    {
-        message: "Passwords match",
-        validationFn: ({ password, repeatPassword }) => password.length > 0 && password === repeatPassword,
-    },
-    {
-        message: "Password has a number",
-        validationFn: ({ password }) => /\d/g.test(password),
-    },
-    {
-        message: "Password has a capital letter",
-        validationFn: ({ password }) => /[A-Z]/.test(password),
-    },
-    {
-        message: "Password has special characters",
-        validationFn: ({ password }) => /[~`¿¡!#$%\^&*€£@+÷=\-\[\]\\';,/{}\(\)|\\":<>\?\.\_]/g.test(password),
-    },
-];
-
-const RegisterValidation = ({ formData, handleFormValidChange }: IPasswordValidation) => {
+const RegisterValidation = ({ formData, handleFormValidChange }: Props) => {
     useEffect(() => {
         const isValid = validationRules.every((rule) => rule.validationFn(formData));
         handleFormValidChange(isValid);
-    }, [formData, handleFormValidChange]);
+    }, [formData]);
 
-    const validationMessages = validationRules.map((rule, key) => (
-        <li key={key}>
-            <div>{rule.validationFn(formData) ? "Yes" : "No"}</div>
-            <p>{rule.message}</p>
-        </li>
-    ));
-
-    return <ul>{validationMessages}</ul>;
+    return (
+        <ul className="flex flex-col gap-2 text-white text-2xl">
+            {validationRules.map((rule, key) => (
+                <li key={key} className="flex items-center">
+                    <span
+                        className={`w-4 h-4 mr-2 rounded-full ${
+                            rule.validationFn(formData) ? "bg-green-500" : "bg-red-500"
+                        }`}
+                    ></span>
+                    <p className="tracking-wide ml-2">{rule.message}</p>
+                </li>
+            ))}
+        </ul>
+    );
 };
 
 export default RegisterValidation;

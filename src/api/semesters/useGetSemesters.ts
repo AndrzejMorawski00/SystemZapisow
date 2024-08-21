@@ -11,6 +11,7 @@ const useGetSemesters = () => {
             if (!response.ok) {
                 throw new Error(`Falied to fetch Tags. Response status: ${response.status} ${response.statusText}`);
             }
+
             return response.json();
         },
     });

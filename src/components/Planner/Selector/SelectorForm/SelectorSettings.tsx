@@ -1,10 +1,10 @@
-import { CourseEffect, CourseTag, CourseType } from "../../../../types";
 import useGetMetadataList from "../../../../api/metadata/useGetMetadataList";
 import useGetSemesters from "../../../../api/semesters/useGetSemesters";
 
 import SelectorForm from "./SelectorForm";
 import { SelectorSettingType } from "../../../../types/selector";
 import usePlannerContext from "../../../../useContextHooks/usePlannerContext";
+import { CourseEffect, CourseTag, CourseType } from "../../../../types/courseTypes";
 
 const SelectorSettings = () => {
     const { handleFormDataChange } = usePlannerContext();
