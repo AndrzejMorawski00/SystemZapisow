@@ -9,8 +9,8 @@ interface Props {
 const SubjectRequirements = ({ requirements, studiesProgress }: Props) => {
     const isEng = studiesProgress.type === "Inżynierskie" ? true : false;
     return (
-        <div className="flex flex-row w-full justify-around">
-            <div className="flex flex-row">
+        <div className="flex flex-row w-full justify-around my-5">
+            <div className="flex flex-row w-full justify-around">
                 <SubjectRequirement
                     label="Projekt"
                     requirementsValue={requirements.project}
@@ -27,7 +27,7 @@ const SubjectRequirements = ({ requirements, studiesProgress }: Props) => {
                     userValue={studiesProgress.practices}
                 />
             </div>
-            <div className="flex flex-row">
+            <div className="flex flex-row w-full justify-around">
                 <SubjectRequirement
                     label="Human"
                     requirementsValue={requirements.hs_ects}

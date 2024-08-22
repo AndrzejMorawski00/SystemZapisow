@@ -21,12 +21,16 @@ const SelectorForm = <MetadataType extends { id: number; name: string; shortcut?
         handleFormDataChange(keyName, value);
     };
     return (
-        <select value={selectData} onChange={(e) => handleSelectDataChange(+e.target.value)}>
+        <select
+            className="FormInput focus:outline-none ScrollBarStyles"
+            value={selectData}
+            onChange={(e) => handleSelectDataChange(+e.target.value)}
+        >
             {selectData === -1 ? (
-                <option>Select an option</option>
+                <option>Wybierz opcję</option>
             ) : (
                 <option key={-1} value={-1}>
-                    Clear
+                    Usuń
                 </option>
             )}
             {data.map((item) => (

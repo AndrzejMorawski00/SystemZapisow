@@ -5,12 +5,13 @@ import CourseList from "../../components/Planner/Selector/CourseList/CourseList"
 import PlannerContextProvider from "../../providers/PlannerContextProvider";
 import PlanInfoWrapper from "../../components/Planner/PlanInfo/PlanInfoWrapper";
 import useGetUserSemesters from "../../api/userSemesters/useGetUserSemesters";
-import { GetUserSemester } from "../../types";
 import PlanTablePagination from "../../components/Planner/Table/PlanTablePagination";
+import { GetUserSemester } from "../../types/planTypes";
+import { PLAN_TYPES } from "../../constants/studiesProgress";
 
 interface LocationState {
     semesterIDList: number[];
-    planType: "Engineer" | "Bachelor";
+    planType: (typeof PLAN_TYPES)[number];
 }
 
 const Planner = () => {
@@ -21,22 +22,28 @@ const Planner = () => {
     const isError = results.some((result) => result.isError);
     const userSemesters = results.map((result) => result.data) as GetUserSemester[];
 
-    if (isLoading) return <div>Loading...</div>;
+    if (isLoading) return <div>Ładowanie...</div>;
 
-    if (isError) return <div>Error loading data</div>;
+    if (isError) return <div>Coś poszło nie tak...</div>;
 
     return (
         <PlannerContextProvider>
             <div className="flex flex-row w-screen h-screen">
-                <div className="flex flex-col gap-1 max-h-screen min-w-[30vw] py-2">
+                <div className="flex flex-col gap-1 max-h-screen w-[28vw] h-full items-center  ml-2 py-2">
                     <CourseSelector />
                     <CourseList />
-                    <PlanInfoWrapper userSemesters={userSemesters} planType={planType} />
+                    <div className="flex w-full justify-center">
+                        <PlanInfoWrapper userSemesters={userSemesters} planType={planType} />
+                    </div>
                 </div>
-                <div className="w-full h-full">
-                    <header className="flex w-full justify-end">
-                        <Link to="/home/">Powrót</Link>
-                        <Link to="/logout/">Wyloguj się</Link>
+                <div className="w-full max-h-screen h-screen flex flex-col gap-3">
+                    <header className="flex w-full justify-end gap-2 h-[10vh] max-h-[10vh]">
+                        <Link className="text-3xl text-white my-3 mr-10 tracking-wide hover:scale-[102%]" to="/home/">
+                            Powrót
+                        </Link>
+                        <Link className="text-3xl text-white my-3 mr-10 tracking-wide hover:scale-[102%]" to="/logout/">
+                            Wyloguj się
+                        </Link>
                     </header>
                     <PlanTablePagination userSemesters={userSemesters} />
                 </div>

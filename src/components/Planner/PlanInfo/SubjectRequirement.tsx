@@ -6,6 +6,14 @@ interface Props {
 
 const SubjectRequirement = ({ label, userValue, requirementsValue }: Props) => {
     const conditionMet = userValue >= requirementsValue;
-    return <p className={`${conditionMet ? "" : ""}`}>{label}</p>;
+    return (
+        <p
+            className={` text-xl tracking-wider  px-5 py-1 rounded-full BoxShadow transition hover:scale-[102%] ${
+                conditionMet ? "bg-green-500" : "bg-red-500"
+            }`}
+        >
+            {label}
+        </p>
+    );
 };
 export default SubjectRequirement;

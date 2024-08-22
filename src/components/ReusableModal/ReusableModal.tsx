@@ -29,9 +29,9 @@ const ModalContent = ({ title, children }: IModalContent) => {
                 <Dialog.Description />
                 <Dialog.Content className="DialogContent">
                     <div className="flex justify-between items-center px-2 pb-4">
-                        <Dialog.Title className="font-medium text-lg tracking-wider">{title}</Dialog.Title>
+                        <Dialog.Title className="text-3xl tracking-wider text-white ">{title}</Dialog.Title>
                         <Dialog.Close asChild>
-                            <Cross2Icon className="w-[20px] h-[20px]" />
+                            <Cross2Icon className="w-9 h-9 text-white transition hover:scale-[102%]" />
                         </Dialog.Close>
                     </div>
                     {children}

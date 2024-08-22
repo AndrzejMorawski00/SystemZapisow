@@ -9,11 +9,11 @@ const SelectorModal = () => {
     return (
         <ReusableModal open={open} onOpenChange={(newOpen) => setOpen(newOpen)}>
             <ReusableModal.Button asChild>
-                <button className="" onClick={() => setOpen(true)}>
-                    <GearIcon />
+                <button className="text-xl" onClick={() => setOpen(true)}>
+                    <GearIcon className="w-9 h-9 text-white ml-5 hover:scale-[102%] hover:text-gray-50"/>
                 </button>
             </ReusableModal.Button>
-            <ReusableModal.Content title="Select Filters">
+            <ReusableModal.Content title="Filtrowanie przedmiotów">
                 <SelectorSettings />
             </ReusableModal.Content>
         </ReusableModal>

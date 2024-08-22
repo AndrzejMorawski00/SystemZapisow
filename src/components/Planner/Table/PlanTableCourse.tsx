@@ -1,4 +1,6 @@
+import { Cross2Icon } from "@radix-ui/react-icons";
 import { Course } from "../../../types/courseTypes";
+import CourseItem from "../../CourseItem/CourseItem";
 
 interface Props {
     course: Course;
@@ -7,18 +9,9 @@ interface Props {
 
 const PlanTableCourse = ({ course, handleUserSemesterChange }: Props) => {
     return (
-        <li key={course.id} className="flex flex-col bg-slate-700 gap-1 m-2 p-2 min-w-[200px] max-w-[20vw]">
-            <div>
-                <p className="text-white text-[1.2rem] tracking-wide whitespace-break-spaces max-w-[24vw]">
-                    {course.name}
-                </p>
-                <button onClick={() => handleUserSemesterChange(course.id, "remove")}>Del</button>
-            </div>
-
-            <div className="flex flex-row items-center justify-between w-full">
-                <p className="CourseSelectorParagraph">ECTS: {course.ects}</p>
-                <p className="CourseSelectorParagraph pr-5">{course.type.shortcut}</p>
-            </div>
+        <li key={course.id} className="flex items-start bg-slate-700 p-1 mb-2">
+            <CourseItem course={course} />
+            <button className="m-2" onClick={() => handleUserSemesterChange(course.id, "remove")}><Cross2Icon className="h-5 w-5 text-white transform hover:scale-[102%] hover:text-red-500"/></button>
         </li>
     );
 };

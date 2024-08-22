@@ -54,7 +54,12 @@ const Home = () => {
                 {displayForm ? (
                     <PlanForm handleFormOpenClose={handleFormOpenClose} currPlan={currPlan} />
                 ) : plans.length < MAX_PLAN_NUMBER ? (
-                    <button className="tracking-wide text-4xl text-white px-8 pt-3 pb-4 rounded-full bg-slate-700 border-2 transition hover:scale-[102%] hover:bg-slate-800 hover:text-gray-100" onClick={() => setDisplayForm(true)}>Nowy Plan</button>
+                    <button
+                        className="tracking-wide text-4xl text-white px-8 pt-3 pb-4 rounded-full bg-slate-700 border-2 transition hover:scale-[102%] hover:bg-slate-800 hover:text-gray-100"
+                        onClick={() => setDisplayForm(true)}
+                    >
+                        Nowy Plan
+                    </button>
                 ) : (
                     ""
                 )}

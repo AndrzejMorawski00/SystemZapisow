@@ -18,38 +18,50 @@ const SelectorSettings = () => {
     const { data: semesters, isError: isSemestersError, isLoading: isSemestersLoading } = useGetSemesters();
 
     return (
-        <div>
-            <div>
-                <SelectorFormWrapper
-                    handleFormDataChange={handleFormDataChange}
-                    selectData={tags || []}
-                    isLoading={isTagLoading}
-                    isError={isTagError}
-                    objName="tag"
-                />
-                <SelectorFormWrapper
-                    handleFormDataChange={handleFormDataChange}
-                    selectData={types || []}
-                    isLoading={isTypesLoading}
-                    isError={isTypesError}
-                    objName="type"
-                />
+        <div className="w-full h-full">
+            <div className="flex flex-row gap-1 w-full justify-around">
+                <div className="flex flex-col gap-1 min-w-[35vw]">
+                    <p className="text-3xl text-white tracking-wider">Tagi:</p>
+                    <SelectorFormWrapper
+                        handleFormDataChange={handleFormDataChange}
+                        selectData={tags || []}
+                        isLoading={isTagLoading}
+                        isError={isTagError}
+                        objName="tag"
+                    />
+                </div>
+                <div className="flex flex-col gap-1 min-w-[35vw]">
+                    <p className="text-3xl text-white tracking-wider">Typy:</p>
+                    <SelectorFormWrapper
+                        handleFormDataChange={handleFormDataChange}
+                        selectData={types || []}
+                        isLoading={isTypesLoading}
+                        isError={isTypesError}
+                        objName="type"
+                    />
+                </div>
             </div>
-            <div>
-                <SelectorFormWrapper
-                    handleFormDataChange={handleFormDataChange}
-                    selectData={effects || []}
-                    isLoading={isEffectsLoading}
-                    isError={isEffectsError}
-                    objName="effect"
-                />
-                <SelectorFormWrapper
-                    handleFormDataChange={handleFormDataChange}
-                    selectData={semesters || []}
-                    isLoading={isSemestersLoading}
-                    isError={isSemestersError}
-                    objName="semester"
-                />
+            <div className="flex flex-row gap-1 w-full justify-around">
+                <div className="flex flex-col gap-1 min-w-[35vw]">
+                    <p className="text-3xl text-white tracking-wider mt-5">Effekty:</p>
+                    <SelectorFormWrapper
+                        handleFormDataChange={handleFormDataChange}
+                        selectData={effects || []}
+                        isLoading={isEffectsLoading}
+                        isError={isEffectsError}
+                        objName="effect"
+                    />
+                </div>
+                <div className="flex flex-col gap-1 min-w-[35vw]">
+                    <p className="text-3xl text-white tracking-wider mt-5">Semestry:</p>
+                    <SelectorFormWrapper
+                        handleFormDataChange={handleFormDataChange}
+                        selectData={semesters || []}
+                        isLoading={isSemestersLoading}
+                        isError={isSemestersError}
+                        objName="semester"
+                    />
+                </div>
             </div>
         </div>
     );
@@ -67,14 +79,15 @@ const SelectorFormWrapper = <T extends { id: number; name: string; shortcut?: st
     handleFormDataChange,
     selectData,
     objName,
+
     isLoading,
     isError,
 }: ISelectorFormWrapper<T>) => {
     if (isLoading) {
-        return <p>{`Loading ${objName}s...`}</p>;
+        return <p>Ładowanie...</p>;
     }
     if (isError) {
-        return <p>{`Error loading ${objName}`}</p>;
+        return <p>Coś poszło nie tak... </p>;
     }
     return <SelectorForm handleFormDataChange={handleFormDataChange} keyName={objName} data={selectData} />;
 };

@@ -3,7 +3,7 @@ import useGetInfiniteCourses from "../../../../api/courses/useGetInfiniteCourses
 import usePlannerContext from "../../../../useContextHooks/usePlannerContext";
 
 import { useInView } from "react-intersection-observer";
-import CourseItem from "./CourseItem";
+import CourseListItem from "./CourseListItem";
 import DragableItem from "../../Draggable/DragableItem";
 import { getCourseQueryParams } from "../../../../utils/api/getCourseQueryParams";
 
@@ -24,22 +24,34 @@ const CourseList = () => {
     }, [inView, hasNextPage, fetchNextPage]);
 
     if (isLoading) {
-        return <p>Loading...</p>;
+        return (
+            <div className="flex justify-center items-center w-full h-full">
+                <p className=" text-white text-2xl">Ładowanie...</p>
+            </div>
+        );
     }
 
     if (isError) {
-        return <p>Error loading courses</p>;
+        return (
+            <div className="flex justify-center items-center w-full h-full">
+                <p className=" text-white text-2xl">Coś poszło nie tak...</p>
+            </div>
+        );
     }
-    return (
-        <ul className="overflow-y-scroll">
-            {courses.map((course, idx) => (
-                <DragableItem key={idx} courseId={course.id}>
-                    <CourseItem key={idx} course={course} fetchNextRef={ref} />
+    return courses.length > 0 ? (
+        <ul className="overflow-y-scroll ScrollBarStyles pr-1 w-full h-full">
+            {courses.map((course) => (
+                <DragableItem key={course.id} courseId={course.id}>
+                    <CourseListItem course={course} fetchNextRef={ref} />
                 </DragableItem>
             ))}
 
-            {isFetchingNextPage ? <li>Loading more courses...</li> : ""}
+            {isFetchingNextPage && <li>Ładowanie kursów...</li>}
         </ul>
+    ) : (
+        <div className="flex justify-center items-center w-full h-full">
+            <p className="text-white text-2xl">Nie znaleziono żadnych kursów...</p>
+        </div>
     );
 };
 

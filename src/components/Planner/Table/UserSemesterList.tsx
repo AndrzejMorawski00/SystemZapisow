@@ -1,4 +1,5 @@
 import useEditUserSemester from "../../../api/userSemesters/useEditUserSemester";
+
 import { GetUserSemester } from "../../../types/planTypes";
 import { getNewUserSemesterCourses } from "../../../utils/Table/getNewUserSemesterCourses";
 import DropableList from "../Draggable/DropableList";
@@ -23,13 +24,17 @@ const UserSemesterList = ({ semester }: Props) => {
         }
     };
 
+    const ects = semester.courses.reduce((acc, course) => acc + course.ects, 0);
+
     return (
-        <div className=" bg-slate-500 w-[50%]">
-            <p>{semester.name}</p>
+        <div className="w-[45%]">
+            <div className="flex w-full justify-between my-2 pr-2">
+                <p className="text-xl text-white ">{semester.name}</p>
+                <p className="text-xl text-white ">ECTS: {ects}</p>
+            </div>
             <DropableList
                 courses={semester.courses}
                 containerName="semester"
-                classStyles=""
                 semesterId={semester.id}
                 handleUserSemesterChange={handleUserSemesterChange}
             >

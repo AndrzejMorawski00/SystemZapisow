@@ -18,7 +18,7 @@ const PlanInfoWrapper = ({ userSemesters, planType }: Props) => {
     return (
         <ReusableModal open={open} onOpenChange={(newOpen) => setOpen(newOpen)}>
             <ReusableModal.Button asChild>
-                <button className="" onClick={() => setOpen(true)}>
+                <button className="tracking-wide text-3xl text-white my-2 px-5 pt-2 pb-3 rounded-full bg-slate-700 border-2 transition hover:scale-[102%] hover:bg-slate-800 hover:text-gray-100 BoxShadow" onClick={() => setOpen(true)}>
                     Wymagania
                 </button>
             </ReusableModal.Button>
