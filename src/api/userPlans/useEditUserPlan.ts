@@ -1,10 +1,12 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { apiConfig } from "../../utils/api/apiConfig";
+import { UserPlan } from "../../types/planTypes";
+import useResponseHandler from "../../utils/api/useResponseHandler";
+
 const apiLink = import.meta.env.VITE_API_URL;
 
-import { apiConfig } from "../../utils/api/apiConfig";
-import { UserPlan } from "../../types";
-
 const useEditUserPlan = () => {
+    const responseHandler = useResponseHandler();
     const queryClient = useQueryClient();
     const headers = apiConfig();
     return useMutation({
@@ -14,7 +16,8 @@ const useEditUserPlan = () => {
                 headers,
                 body: JSON.stringify(userPlan),
             });
-            return response.json();
+
+            return await responseHandler(response);
         },
         onSuccess: (_, data) => {
             queryClient.invalidateQueries({

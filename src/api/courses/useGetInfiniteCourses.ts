@@ -1,5 +1,6 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { Course, PaginatedResponse } from "../../types";
+import { PaginatedResponse } from "../../types/api";
+import { Course } from "../../types/courseTypes";
 
 const apiLink = import.meta.env.VITE_API_URL;
 

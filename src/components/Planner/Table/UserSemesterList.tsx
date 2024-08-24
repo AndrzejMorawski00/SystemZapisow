@@ -1,5 +1,4 @@
 import useEditUserSemester from "../../../api/userSemesters/useEditUserSemester";
-
 import { GetUserSemester } from "../../../types/planTypes";
 import { getNewUserSemesterCourses } from "../../../utils/Table/getNewUserSemesterCourses";
 import DropableList from "../Draggable/DropableList";

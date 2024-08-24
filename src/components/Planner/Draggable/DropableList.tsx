@@ -6,7 +6,6 @@ import { Course } from "../../../types/courseTypes";
 interface Props {
     children: ReactNode;
     containerName: string;
-
     courses: Course[];
     semesterId: number;
     handleUserSemesterChange: (courseId: number, action: "add" | "remove") => Promise<void>;

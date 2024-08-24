@@ -1,21 +1,30 @@
-import useGetMetadataList from "../../../../api/metadata/useGetMetadataList";
-import useGetSemesters from "../../../../api/semesters/useGetSemesters";
-
 import SelectorForm from "./SelectorForm";
 import { SelectorSettingType } from "../../../../types/selector";
 import usePlannerContext from "../../../../useContextHooks/usePlannerContext";
-import { CourseEffect, CourseTag, CourseType } from "../../../../types/courseTypes";
+import { CourseEffect, CourseTag, CourseType, Semester } from "../../../../types/courseTypes";
+import { generateEndpoint } from "../../../../utils/api/generateEndpoint";
+import useGetRequest from "../../../../api/useGetRequest";
 
 const SelectorSettings = () => {
     const { handleFormDataChange } = usePlannerContext();
-    const { data: tags, isError: isTagError, isLoading: isTagLoading } = useGetMetadataList<CourseTag>("tags");
+
     const {
         data: effects,
         isError: isEffectsError,
         isLoading: isEffectsLoading,
-    } = useGetMetadataList<CourseEffect>("effects");
-    const { data: types, isError: isTypesError, isLoading: isTypesLoading } = useGetMetadataList<CourseType>("types");
-    const { data: semesters, isError: isSemestersError, isLoading: isSemestersLoading } = useGetSemesters();
+    } = useGetRequest<CourseEffect[]>(["list", "effects"], generateEndpoint(["api", "effects"]));
+
+    const {
+        data: types,
+        isError: isTypesError,
+        isLoading: isTypesLoading,
+    } = useGetRequest<CourseType[]>(["list", "types"], generateEndpoint(["api", "types"]));
+    const {
+        data: tags,
+        isError: isTagError,
+        isLoading: isTagLoading,
+    } = useGetRequest<CourseTag[]>(["list", "tags"], generateEndpoint(["api", "tags"]));
+    const { data: semesters, isError: isSemestersError, isLoading: isSemestersLoading } = useGetRequest<Semester[]>(['semesters', 'list'], generateEndpoint(['api', 'semesters']));
 
     return (
         <div className="w-full h-full">
@@ -41,6 +50,7 @@ const SelectorSettings = () => {
                     />
                 </div>
             </div>
+
             <div className="flex flex-row gap-1 w-full justify-around">
                 <div className="flex flex-col gap-1 min-w-[35vw]">
                     <p className="text-3xl text-white tracking-wider mt-5">Effekty:</p>

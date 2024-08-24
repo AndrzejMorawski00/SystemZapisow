@@ -5,6 +5,7 @@ import PlanForm from "../../components/PlanForm";
 import PlanItem from "../../components/Home/PlanItem";
 import { UserPlan } from "../../types/planTypes";
 import { MAX_PLAN_NUMBER } from "../../constants/semesterData";
+import { redirect } from "react-router-dom";
 
 const Home = () => {
     const [displayForm, setDisplayForm] = useState(false);
@@ -36,11 +37,7 @@ const Home = () => {
         );
     }
     if (isPlanError) {
-        return (
-            <div className="w-full h-full flex items-center justify-center">
-                <p className="text-3xl text-white tracking-wide">Coś poszło nie tak...</p>
-            </div>
-        );
+        redirect('/')
     }
     const plans = data ? data : [];
     return (

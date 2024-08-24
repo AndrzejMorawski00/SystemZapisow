@@ -26,7 +26,7 @@ const Login = () => {
         if (formData.password && formData.username) {
             await loginMutation.mutateAsync({ ...formData });
         } else {
-            handleAddMessages(["Username and Password are required"]);
+            handleAddMessages(["Login i hasło są wymagane"]);
         }
     };
 

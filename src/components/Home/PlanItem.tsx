@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
-import { deleteSVG, editSVG } from "../../constants/home";
+import { editSVG } from "../../constants/home";
 import { UserPlan } from "../../types/planTypes";
+import ConfirmPlanItemDelete from "./ConfirmPlanItemDelete";
 
 interface Props {
     plan: UserPlan;
@@ -24,12 +25,7 @@ const PlanItem = ({ plan, handlePlanListButtonClick }: Props) => {
                 >
                     {editSVG}
                 </button>
-                <button
-                    onClick={() => handlePlanListButtonClick("delete", plan)}
-                    className="text-white w-[2.5rem] h-[2.5rem] mr-3 hover:text-red-500 transition-colors transition-duration-[300]"
-                >
-                    {deleteSVG}
-                </button>
+                <ConfirmPlanItemDelete plan={plan} handlePlanListButtonClick={handlePlanListButtonClick} />
             </div>
         </li>
     );

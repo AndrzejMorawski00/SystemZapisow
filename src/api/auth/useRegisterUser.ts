@@ -12,7 +12,7 @@ interface RegisterMutation {
 const useRegisterUser = (handleMessagesChange: (messages: string[]) => void) => {
     const navigate = useNavigate();
     const registerMutation = useMutation({
-        mutationFn: async ({ username, password, repeatPassword }: RegisterMutation) => {
+        mutationFn: async ({ username, password, repeatPassword }: RegisterMutation): Promise<void> => {
             const response = await fetch(`${apiLink}/planner/register/`, {
                 method: "POST",
                 headers: {
@@ -29,8 +29,6 @@ const useRegisterUser = (handleMessagesChange: (messages: string[]) => void) => 
                 }
                 throw new Error(errorObj.errors || "Failed To register User");
             }
-
-            return data;
         },
         onSuccess: () => {
             navigate("/login/");

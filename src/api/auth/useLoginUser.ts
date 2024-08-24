@@ -1,6 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../../constants/auth";
 import { useNavigate } from "react-router-dom";
+import { LoginUser } from "../../types/auth";
 
 interface Props {
     username: string;
@@ -12,7 +13,7 @@ const apiLink = import.meta.env.VITE_API_URL;
 const useLoginUser = (handleMessagesChange: (messages: string[]) => void) => {
     const navigate = useNavigate();
     const loginMutation = useMutation({
-        mutationFn: async ({ username, password }: Props) => {
+        mutationFn: async ({ username, password }: Props): Promise<LoginUser> => {
             const response = await fetch(`${apiLink}/planner/token/`, {
                 method: "POST",
                 headers: {
@@ -22,10 +23,11 @@ const useLoginUser = (handleMessagesChange: (messages: string[]) => void) => {
             });
 
             if (!response.ok) {
-                handleMessagesChange(["Failed To Login Please Try again."]);
+                handleMessagesChange(["Coś poszło nie tak. Spróbuj ponownie"]);
                 throw new Error("Login Failed");
             }
-            return response.json();
+
+            return await response.json();
         },
         onSuccess: (data) => {
             localStorage.setItem(ACCESS_TOKEN, data.access);
@@ -34,7 +36,6 @@ const useLoginUser = (handleMessagesChange: (messages: string[]) => void) => {
         },
         onError: (error) => {
             console.log("error ", error);
-            return error;
         },
     });
     return loginMutation;

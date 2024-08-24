@@ -1,6 +1,6 @@
 import { keepPreviousData, useQueries, UseQueryResult } from "@tanstack/react-query";
 import { apiConfig } from "../../utils/api/apiConfig";
-import { GetUserSemester } from "../../types";
+import { GetUserSemester } from "../../types/planTypes";
 
 const apiLink = import.meta.env.VITE_API_URL;
 

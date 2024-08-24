@@ -13,12 +13,14 @@ const ErrorMessages = ({ children }: Props) => {
             <ReusableModal open={true} onOpenChange={handleRemoveMessages}>
                 <ReusableModal.Content title="Errors">
                     <div>
-                        <ul>
+                        <ul className="flex flex-col gap-2 ml-3">
                             {messages.map((message, idx) => (
-                                <li key={idx}>{message}</li>
+                                <li className="text-xl text-white tracking-wider" key={idx}>
+                                    {message}
+                                </li>
                             ))}
                         </ul>
-                        <button onClick={handleRemoveMessages}>Ok</button>
+                        <button className="tracking-wide text-2xl text-white mt-10 px-5 pt-1 pb-2 rounded-full bg-slate-700 border-2 transition hover:scale-[102%] hover:bg-slate-800 hover:text-gray-100" onClick={handleRemoveMessages}>Ok</button>
                     </div>
                 </ReusableModal.Content>
             </ReusableModal>

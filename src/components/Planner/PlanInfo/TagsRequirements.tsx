@@ -1,6 +1,7 @@
-import useGetMetadataList from "../../../api/metadata/useGetMetadataList";
+import useGetRequest from "../../../api/useGetRequest";
 import { CourseTag } from "../../../types/courseTypes";
 import { StudiesProgressType } from "../../../types/providers";
+import { generateEndpoint } from "../../../utils/api/generateEndpoint";
 
 interface Props {
     requirements: StudiesProgressType;
@@ -8,13 +9,8 @@ interface Props {
 }
 
 const TagRequirements = ({ requirements, studiesProgress }: Props) => {
-    const { data: tags, isLoading, isError } = useGetMetadataList<CourseTag>("tags");
-
-    const requirementTags = (tags?.filter((tag) => requirements.tags.includes(tag.id)) || []).map((tag) => ({
-        conditionMet: tag.id in studiesProgress.tags,
-        ...tag,
-    }));
-
+    const { data: tags, isError, isLoading } = useGetRequest<CourseTag[]>(['list','requirements', 'tags'], generateEndpoint(['api','tags']));
+    // const { data: tags, isError, isLoading } = useGetRequest<CourseTag[]>(['list', 'tags'], generateEndpoint(['tags'])); // Which way is correct if I'm using the same set of keys twice?
     if (isLoading) {
         return (
             <div className="flex w-full h-full items-center justify-center">
@@ -31,10 +27,20 @@ const TagRequirements = ({ requirements, studiesProgress }: Props) => {
         );
     }
 
+    const requirementTags = (tags?.filter((tag) => requirements.tags.includes(tag.id)) || []).map((tag) => ({
+        conditionMet: studiesProgress.tags.includes(tag.id),
+        ...tag,
+    }));
+
     return (
         <ul className="flex flex-row justify-around mt-5">
             {requirementTags.map((tag) => (
-                <li className={` text-xl tracking-wider  px-5 py-1 rounded-full BoxShadow transition hover:scale-[102%] ${tag.conditionMet ? "bg-green-500" : "bg-red-500"}`} key={tag.id}>
+                <li
+                    className={` text-xl tracking-wider  px-5 py-1 rounded-full BoxShadow transition hover:scale-[102%] ${
+                        tag.conditionMet ? "bg-green-500" : "bg-red-500"
+                    }`}
+                    key={tag.id}
+                >
                     {tag.shortcut}
                 </li>
             ))}

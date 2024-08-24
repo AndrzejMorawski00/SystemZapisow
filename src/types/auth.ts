@@ -1,7 +1,6 @@
 export type LoginFormData = {
     username: string;
     password: string;
-
 };
 export type RegisterFormData = {
     username: string;
@@ -9,11 +8,11 @@ export type RegisterFormData = {
     repeatPassword: string;
 };
 
-export type RegisterFormDataTypeKey = keyof RegisterFormData
+export type RegisterFormDataTypeKey = keyof RegisterFormData;
 
 export type ValidationRule = {
     message: string;
-    validationFn: (formData : RegisterFormData) => boolean;
+    validationFn: (formData: RegisterFormData) => boolean;
 };
 
 export type ValidationRulesNames =
@@ -26,4 +25,9 @@ export type ValidationRulesNames =
 
 export type ValidationRulesMap = {
     [key in ValidationRulesNames]: ValidationRule;
+};
+
+export type LoginUser = {
+    access: string;
+    refresh: string;
 };

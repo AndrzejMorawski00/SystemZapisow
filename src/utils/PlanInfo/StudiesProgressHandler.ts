@@ -28,16 +28,24 @@ export class StudiesProgressHandler {
         return this.studiesProgress;
     }
 
+    private updateOtherProperties(courseTags: number[], course: Course): void {
+        const courseEffects = course.effects.map((effect) => effect.id);
+        if (courseEffects.includes(11) || courseTags.includes(11)) {
+            this.handleStudiesProgressChange("e_ects", course.ects);
+        }
+        if (course.name.includes("Ochrona własności intelektualnej")) {
+            this.handleStudiesProgressChange("owi_ects", course.ects);
+        }
+        if (course.name.includes("Praktyka zawodowa ")) {
+            this.handleStudiesProgressChange("practices", course.ects);
+        }
+    }
+
     private updateUserStudiesProgress(course: Course): void {
         const courseTags = course.tags.map((tag) => tag.id);
         this.updateECTSProgress(course);
         this.updateTagsProgress(courseTags);
-        if (courseTags.includes(5)) {
-            this.handleStudiesProgressChange("e_ects", course.ects);
-        }
-        if (course.name.includes("właściwości")) {
-            this.handleStudiesProgressChange("owi_ects", course.ects);
-        }
+        this.updateOtherProperties(courseTags, course);
     }
 
     private updateECTSProgress(course: Course): void {

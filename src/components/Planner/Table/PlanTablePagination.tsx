@@ -1,5 +1,4 @@
 import { useState } from "react";
-// import { GetUserSemester } from "../../../types";
 import UserSemesterList from "./UserSemesterList";
 import { GetUserSemester } from "../../../types/planTypes";
 

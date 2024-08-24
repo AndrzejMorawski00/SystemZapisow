@@ -1,10 +1,13 @@
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { apiConfig } from "../../utils/api/apiConfig";
-import { UserPlan } from "../../types";
+import { UserPlan } from "../../types/planTypes";
+import useResponseHandler from "../../utils/api/useResponseHandler";
 
 const apiLink = import.meta.env.VITE_API_URL;
 
 const useGetUserPlans = () => {
+    const responseHandler = useResponseHandler();
+
     return useQuery({
         queryKey: ["plans", "list"],
         queryFn: async (): Promise<UserPlan[]> => {
@@ -12,12 +15,8 @@ const useGetUserPlans = () => {
             const response = await fetch(`${apiLink}/planner/plans/`, {
                 headers,
             });
-            if (!response.ok) {
-                throw new Error(
-                    `Falied to fetch user plans. Response status: ${response.status} ${response.statusText}`
-                );
-            }
-            return response.json();
+
+            return await responseHandler(response);
         },
         placeholderData: keepPreviousData,
     });

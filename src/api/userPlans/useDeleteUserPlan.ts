@@ -1,9 +1,11 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiConfig } from "../../utils/api/apiConfig";
+import useResponseHandler from "../../utils/api/useResponseHandler";
 
 const apiLink = import.meta.env.VITE_API_URL;
 
 const useDeleteUserPlan = () => {
+    const responseHandler = useResponseHandler();
     const queryClient = useQueryClient();
     const headers = apiConfig();
     return useMutation({
@@ -12,9 +14,7 @@ const useDeleteUserPlan = () => {
                 method: "DELETE",
                 headers,
             });
-            if (!response.ok) {
-                throw new Error(`Failed to delete user plan`);
-            }
+            return await responseHandler(response);
         },
         onSuccess: () => {
             queryClient.invalidateQueries({

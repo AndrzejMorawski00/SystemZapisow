@@ -1,6 +1,5 @@
 import { BAC_REQUIREMENTS, ENG_REQUIREMENTS } from "../../../constants/studiesProgress";
 import { StudiesProgressType } from "../../../types/providers";
-// import { StudiesProgressType } from "../../../types";
 import ECTSRequirements from "./ECTSRequirements";
 import SubjectRequirements from "./SubjectRequirements";
 import TagRequirements from "./TagsRequirements";

@@ -1,11 +1,13 @@
 import { useMutation } from "@tanstack/react-query";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../../constants/auth";
+import { useNavigate } from "react-router-dom";
 
 const apiLink = import.meta.env.VITE_API_URL;
 
-const useRefreshToken = async (handleAuthStateChange: (newVal: boolean) => void) => {
+const useRefreshToken = async (handleAuthStateChange: (newVal: boolean) => void = () => {}) => {
+    const navigate = useNavigate();
     const refreshMutation = useMutation({
-        mutationFn: async () => {
+        mutationFn: async (): Promise<{ access: string }> => {
             const refreshToken = localStorage.getItem(REFRESH_TOKEN);
             const response = await fetch(`${apiLink}/planner/token/refresh/`, {
                 method: "POST",
@@ -16,9 +18,10 @@ const useRefreshToken = async (handleAuthStateChange: (newVal: boolean) => void)
             });
             const data = await response.json();
             if (!response.ok) {
+                navigate("/");
                 throw new Error("Failed to refresh token");
             }
-            
+
             return data;
         },
         onSuccess: (data) => {
