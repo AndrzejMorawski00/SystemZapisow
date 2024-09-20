@@ -11,7 +11,6 @@ const fetchCourses = async (
     endpointData: string
 ): Promise<PaginatedResponse<Course>> => {
     const link = `${apiLink}/api/courses/${semesterId}/${endpointData}&page=${pageParam}`;
-    console.log(link);
     const response = await fetch(link);
     return response.json();
 };

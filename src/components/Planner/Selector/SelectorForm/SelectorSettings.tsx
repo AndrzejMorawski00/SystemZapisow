@@ -7,7 +7,6 @@ import useGetRequest from "../../../../api/useGetRequest";
 
 const SelectorSettings = () => {
     const { handleFormDataChange } = usePlannerContext();
-
     const {
         data: effects,
         isError: isEffectsError,
@@ -24,7 +23,11 @@ const SelectorSettings = () => {
         isError: isTagError,
         isLoading: isTagLoading,
     } = useGetRequest<CourseTag[]>(["list", "tags"], generateEndpoint(["api", "tags"]));
-    const { data: semesters, isError: isSemestersError, isLoading: isSemestersLoading } = useGetRequest<Semester[]>(['semesters', 'list'], generateEndpoint(['api', 'semesters']));
+    const {
+        data: semesters,
+        isError: isSemestersError,
+        isLoading: isSemestersLoading,
+    } = useGetRequest<Semester[]>(["semesters", "list"], generateEndpoint(["api", "semesters"]));
 
     return (
         <div className="w-full h-full">
@@ -94,10 +97,10 @@ const SelectorFormWrapper = <T extends { id: number; name: string; shortcut?: st
     isError,
 }: ISelectorFormWrapper<T>) => {
     if (isLoading) {
-        return <p>Ładowanie...</p>;
+        return <p className="text-xl text-white">Ładowanie...</p>;
     }
     if (isError) {
-        return <p>Coś poszło nie tak... </p>;
+        return <p className="text-xl text-white">Coś poszło nie tak... </p>;
     }
     return <SelectorForm handleFormDataChange={handleFormDataChange} keyName={objName} data={selectData} />;
 };

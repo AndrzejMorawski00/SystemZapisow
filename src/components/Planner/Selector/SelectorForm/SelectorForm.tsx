@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import { SelectorSettingType } from "../../../../types/selector";
 import usePlannerContext from "../../../../useContextHooks/usePlannerContext";
 
@@ -16,10 +16,27 @@ const SelectorForm = <MetadataType extends { id: number; name: string; shortcut?
     const currData = usePlannerContext();
     const [selectData, setSelectData] = useState<number>(currData[keyName]);
 
-    const handleSelectDataChange = (value: number) => {
+    const handleSelectDataChange = (value: number): void => {
+        if (value === -1 && keyName === "semester") {
+            setSelectData(28);
+            handleFormDataChange("semester", 28);
+            return;
+        }
         setSelectData(value);
         handleFormDataChange(keyName, value);
     };
+
+    const getValidFormOption = (): ReactNode => {
+        if (keyName === "semester") {
+            return (
+                <option key={28} value="oferta">
+                    oferta
+                </option>
+            );
+        }
+        return <option>Wybierz opcję</option>;
+    };
+
     return (
         <select
             className="FormInput focus:outline-none ScrollBarStyles"
@@ -27,7 +44,7 @@ const SelectorForm = <MetadataType extends { id: number; name: string; shortcut?
             onChange={(e) => handleSelectDataChange(+e.target.value)}
         >
             {selectData === -1 ? (
-                <option>Wybierz opcję</option>
+                getValidFormOption()
             ) : (
                 <option key={-1} value={-1}>
                     Usuń

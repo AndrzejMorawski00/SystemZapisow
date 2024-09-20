@@ -36,7 +36,7 @@ const useLoginUser = (handleMessagesChange: (messages: string[]) => void) => {
             navigate("/home/");
         },
         onError: (error) => {
-            console.log("error ", error);
+            console.error("error ", error);
         },
     });
     return loginMutation;

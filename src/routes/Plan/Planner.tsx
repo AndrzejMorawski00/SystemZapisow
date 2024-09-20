@@ -22,9 +22,9 @@ const Planner = () => {
     const isError = results.some((result) => result.isError);
     const userSemesters = results.map((result) => result.data) as GetUserSemester[];
 
-    if (isLoading) return <div>Ładowanie...</div>;
+    if (isLoading) return <div className="flex items-center justify-center h-screen text-xl text-white">Ładowanie...</div>;
 
-    if (isError) return <div>Coś poszło nie tak...</div>;
+    if (isError) return <div className="flex items-center justify-center h-screen text-xl text-white">Coś poszło nie tak...</div>;
 
     return (
         <PlannerContextProvider>
