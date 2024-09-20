@@ -1,7 +1,8 @@
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
+import { getAPILinkValue } from "../../utils/api/apiConfig";
 
-const apiLink = import.meta.env.VITE_API_URL;
+const apiLink = getAPILinkValue();
 
 interface RegisterMutation {
     username: string;

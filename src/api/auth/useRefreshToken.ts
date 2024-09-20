@@ -1,8 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../../constants/auth";
 import { useNavigate } from "react-router-dom";
+import { getAPILinkValue } from "../../utils/api/apiConfig";
 
-const apiLink = import.meta.env.VITE_API_URL;
+const apiLink = getAPILinkValue();
 
 const useRefreshToken = async (handleAuthStateChange: (newVal: boolean) => void = () => {}) => {
     const navigate = useNavigate();

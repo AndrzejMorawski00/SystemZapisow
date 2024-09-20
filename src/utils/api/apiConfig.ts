@@ -12,3 +12,11 @@ export const apiConfig = (): Headers => {
     headers.append("Content-Type", "application/json");
     return headers;
 };
+
+export const getAPILinkValue = (): string => {
+    const isDevelopment = import.meta.env.MODE === "development";
+    if (isDevelopment) {
+        return import.meta.env.VITE_API_BASE_URL_LOCAL;
+    }
+    return import.meta.env.VITE_API_BASE_URL_PROD;
+};

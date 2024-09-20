@@ -1,9 +1,9 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { apiConfig } from "../../utils/api/apiConfig";
+import { apiConfig, getAPILinkValue } from "../../utils/api/apiConfig";
 import { EditUserSemester } from "../../types/planTypes";
 import useResponseHandler from "../../utils/api/useResponseHandler";
 
-const apiLink = import.meta.env.VITE_API_URL;
+const apiLink = getAPILinkValue();
 
 const useEditUserSemester = () => {
     const responseHandler = useResponseHandler();

@@ -1,9 +1,9 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { NewUserPlan } from "../../types/planTypes";
-import { apiConfig } from "../../utils/api/apiConfig";
+import { apiConfig, getAPILinkValue } from "../../utils/api/apiConfig";
 import useResponseHandler from "../../utils/api/useResponseHandler";
 
-const apiLink = import.meta.env.VITE_API_URL;
+const apiLink = getAPILinkValue();
 
 const useAddUserPlan = (handleFormOpenClose: (newValue: boolean) => void) => {
     const responseHandler = useResponseHandler();

@@ -1,15 +1,16 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { PaginatedResponse } from "../../types/api";
 import { Course } from "../../types/courseTypes";
+import { getAPILinkValue } from "../../utils/api/apiConfig";
 
-const apiLink = import.meta.env.VITE_API_URL;
+const apiLink = getAPILinkValue();
 
 const fetchCourses = async (
     pageParam: string,
     semesterId: number,
     endpointData: string
 ): Promise<PaginatedResponse<Course>> => {
-    const link = `${apiLink}/api/courses/${semesterId}/${endpointData}&page=${pageParam}`
+    const link = `${apiLink}/api/courses/${semesterId}/${endpointData}&page=${pageParam}`;
     console.log(link);
     const response = await fetch(link);
     return response.json();

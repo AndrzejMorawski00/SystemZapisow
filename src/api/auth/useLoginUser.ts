@@ -2,13 +2,14 @@ import { useMutation } from "@tanstack/react-query";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../../constants/auth";
 import { useNavigate } from "react-router-dom";
 import { LoginUser } from "../../types/auth";
+import { getAPILinkValue } from "../../utils/api/apiConfig";
 
 interface Props {
     username: string;
     password: string;
 }
 
-const apiLink = import.meta.env.VITE_API_URL;
+const apiLink = getAPILinkValue();
 
 const useLoginUser = (handleMessagesChange: (messages: string[]) => void) => {
     const navigate = useNavigate();

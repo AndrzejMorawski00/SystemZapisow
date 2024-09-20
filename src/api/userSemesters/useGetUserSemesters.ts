@@ -1,8 +1,8 @@
 import { keepPreviousData, useQueries, UseQueryResult } from "@tanstack/react-query";
-import { apiConfig } from "../../utils/api/apiConfig";
+import { apiConfig, getAPILinkValue } from "../../utils/api/apiConfig";
 import { GetUserSemester } from "../../types/planTypes";
 
-const apiLink = import.meta.env.VITE_API_URL;
+const apiLink = getAPILinkValue();
 
 const fetchUserSemester = async (semesterId: number): Promise<GetUserSemester> => {
     const response = await fetch(`${apiLink}/planner/semester/${semesterId}/`, {
