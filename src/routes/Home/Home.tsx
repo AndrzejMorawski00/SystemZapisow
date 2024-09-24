@@ -37,7 +37,7 @@ const Home = () => {
         );
     }
     if (isPlanError) {
-        redirect('/')
+        redirect("/");
     }
     const plans = data ? data : [];
     return (
