@@ -46,7 +46,7 @@ const CourseList = () => {
                 </DragableItem>
             ))}
 
-            {isFetchingNextPage && <li>Ładowanie kursów...</li>}
+            {isFetchingNextPage && <li className="text-white text-2xl">Ładowanie kursów...</li>}
         </ul>
     ) : (
         <div className="flex justify-center items-center w-full h-full">

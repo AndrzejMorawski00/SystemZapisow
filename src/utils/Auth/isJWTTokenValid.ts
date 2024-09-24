@@ -4,11 +4,7 @@ export const isJWTTokenValid = (token: string): boolean => {
     try {
         const decoded = jwtDecode(token);
         const tokenExpiration = decoded.exp ? decoded.exp : -1;
-        if (tokenExpiration < Date.now() / 1000) {
-            return false;
-        } else {
-            return true;
-        }
+        return (tokenExpiration < Date.now() / 1000);
     } catch (error) {
         console.error(`Error decoding token ${error}`);
         return false;

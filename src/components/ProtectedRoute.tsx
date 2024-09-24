@@ -19,7 +19,7 @@ const ProtectedRoute = ({ children }: Props) => {
         auth();
     }, []);
 
-    const auth = async () => {
+    const auth = async (): Promise<void> => {
         const token = localStorage.getItem(ACCESS_TOKEN);
         if (!token) {
             setIsAuthorized(false);
@@ -32,7 +32,11 @@ const ProtectedRoute = ({ children }: Props) => {
         }
     };
     if (isAuthorized === null) {
-        return <p>Loading...</p>;
+        return (
+            <div className="flex justify-center items-center w-full h-full">
+                <p className=" text-white text-2xl">Ładowanie...</p>
+            </div>
+        );
     }
 
     return isAuthorized ? children : <Navigate to="/" />;

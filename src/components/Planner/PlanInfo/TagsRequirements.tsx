@@ -10,7 +10,7 @@ interface Props {
 
 const TagRequirements = ({ requirements, studiesProgress }: Props) => {
     const { data: tags, isError, isLoading } = useGetRequest<CourseTag[]>(['list','requirements', 'tags'], generateEndpoint(['api','tags']));
-    // const { data: tags, isError, isLoading } = useGetRequest<CourseTag[]>(['list', 'tags'], generateEndpoint(['tags'])); // Which way is correct if I'm using the same set of keys twice?
+    
     if (isLoading) {
         return (
             <div className="flex w-full h-full items-center justify-center">

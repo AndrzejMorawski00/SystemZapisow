@@ -13,7 +13,7 @@ const PlanTablePaginaton = ({ userSemesters }: Props) => {
         pageSize: 2,
     });
 
-    const handlePageChange = (newPage: number) => {
+    const handlePageChange = (newPage: number) : void => {
         setPaginationData((prevData) => ({
             ...prevData,
             currPage: prevData.currPage + newPage,

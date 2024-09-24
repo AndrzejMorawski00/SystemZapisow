@@ -20,27 +20,24 @@ const PlanForm = ({ handleFormOpenClose, currPlan }: Props) => {
     });
 
     useEffect(() => {
-        if (currPlan) {
-            setFormData({
-                name: currPlan ? currPlan.name : "",
-                type: currPlan ? currPlan.type : "Inżynierskie",
-                create: true,
-            });
-        }
+        setFormData({
+            name: currPlan ? currPlan.name : "",
+            type: currPlan ? currPlan.type : "Inżynierskie",
+            create: true,
+        });
     }, [currPlan]);
 
-    const handleFormDataChange = <T extends keyof NewUserPlan>(key: string, value: NewUserPlan[T]) => {
-        if (isValidKeyValue<NewUserPlan>(key, formData)) {
-            setFormData({
-                ...formData,
-                [key]: value,
-            });
-            return;
+    const handleFormDataChange = <T extends keyof NewUserPlan>(key: string, value: NewUserPlan[T]): void => {
+        if (!isValidKeyValue<NewUserPlan>(key, formData)) {
+            throw new Error(`Invalid key ${key}`);
         }
-        throw new Error(`Invalid key ${key}`);
+        setFormData({
+            ...formData,
+            [key]: value,
+        });
     };
 
-    const handleFormSubmit = async () => {
+    const handleFormSubmit = async (): Promise<void> => {
         if (!formData.name) {
             return;
         }

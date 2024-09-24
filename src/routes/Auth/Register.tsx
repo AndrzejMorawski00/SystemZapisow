@@ -25,7 +25,7 @@ const Register = () => {
         throw new Error(`Invalid key ${key}`);
     };
 
-    const handleFormValidChange = (newVal: boolean) => {
+    const handleFormValidChange = (newVal: boolean) : void => {
         setValidForm(newVal);
     };
 

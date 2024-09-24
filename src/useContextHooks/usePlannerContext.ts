@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { PlannerContext } from "../providers/PlannerContextProvider";
-import { PlannerContextType } from "../types";
+import { PlannerContextType } from "../types/providers";
 const usePlannerContext = (): PlannerContextType => {
     const context = useContext(PlannerContext);
     if (context === undefined) {

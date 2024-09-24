@@ -3,18 +3,18 @@ import { Cross2Icon } from "@radix-ui/react-icons";
 
 import { ReactNode } from "react";
 
-interface IReusableModal {
+interface ReusableModalProps {
     open: boolean;
     onOpenChange: (open: boolean) => void;
     children: ReactNode;
 }
 
-interface IModalContent {
+interface ModalContentProps {
     title: string;
     children: ReactNode;
 }
 
-const ReusableModal = ({ open, onOpenChange, children }: IReusableModal) => {
+const ReusableModal = ({ open, onOpenChange, children }: ReusableModalProps) => {
     return (
         <Dialog.Root open={open} onOpenChange={onOpenChange}>
             {children}
@@ -22,7 +22,7 @@ const ReusableModal = ({ open, onOpenChange, children }: IReusableModal) => {
     );
 };
 
-const ModalContent = ({ title, children }: IModalContent) => {
+const ModalContent = ({ title, children }: ModalContentProps) => {
     return (
         <Dialog.Portal>
             <Dialog.Overlay className="DialogOverlay">

@@ -12,15 +12,16 @@ interface Props {
 const UserSemesterList = ({ semester }: Props) => {
     const editUserSemesterMutation = useEditUserSemester();
 
-    const handleUserSemesterChange = async (courseId: number, action: "add" | "remove") => {
+    const handleUserSemesterChange = async (courseId: number, action: "add" | "remove"): Promise<void> => {
         const { update, newCourses } = getNewUserSemesterCourses(semester.courses, courseId, action);
-        if (update) {
-            const newUserSemester = {
-                ...semester,
-                ["courses"]: newCourses,
-            };
-            await editUserSemesterMutation.mutateAsync(newUserSemester);
+        if (!update) {
+            return;
         }
+        const newUserSemester = {
+            ...semester,
+            ["courses"]: newCourses,
+        };
+        await editUserSemesterMutation.mutateAsync(newUserSemester);
     };
 
     const ects = semester.courses.reduce((acc, course) => acc + course.ects, 0);

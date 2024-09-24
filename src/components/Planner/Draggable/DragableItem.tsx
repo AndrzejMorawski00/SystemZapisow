@@ -13,18 +13,19 @@ const DragableItem = ({ children, courseId }: Props) => {
 
     useEffect(() => {
         const elem = dragRef.current;
-        if (elem) {
-            return draggable({
-                element: elem,
-                getInitialData: () => ({ courseId }),
-                onDragStart: () => {
-                    setDragging(true);
-                },
-                onDrop: () => {
-                    setDragging(false);
-                },
-            });
+        if (!elem) {
+            return;
         }
+        return draggable({
+            element: elem,
+            getInitialData: () => ({ courseId }),
+            onDragStart: () => {
+                setDragging(true);
+            },
+            onDrop: () => {
+                setDragging(false);
+            },
+        });
     }, []);
 
     return (

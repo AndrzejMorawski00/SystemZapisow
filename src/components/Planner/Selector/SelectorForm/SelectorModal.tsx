@@ -4,7 +4,7 @@ import { GearIcon } from "@radix-ui/react-icons";
 import SelectorSettings from "./SelectorSettings";
 
 const SelectorModal = () => {
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState<boolean>(false);
 
     return (
         <ReusableModal open={open} onOpenChange={(newOpen) => setOpen(newOpen)}>

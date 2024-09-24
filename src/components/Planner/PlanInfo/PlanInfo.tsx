@@ -1,19 +1,9 @@
-import { BAC_REQUIREMENTS, ENG_REQUIREMENTS } from "../../../constants/studiesProgress";
 import { StudiesProgressType } from "../../../types/providers";
+import { getStudiaRequirements } from "../../../utils/PlanInfo/getStudiesType";
 import ECTSRequirements from "./ECTSRequirements";
 import SubjectRequirements from "./SubjectRequirements";
 import TagRequirements from "./TagsRequirements";
 
-const getStudiaRequirements = (studiesType: "Licencjackie" | "Inżynierskie"): StudiesProgressType => {
-    switch (studiesType) {
-        case "Inżynierskie":
-            return ENG_REQUIREMENTS;
-        case "Licencjackie":
-            return BAC_REQUIREMENTS;
-        default:
-            throw new Error(`Invalid Studies Type: ${studiesType}`);
-    }
-};
 
 interface Props {
     studiesProgress: StudiesProgressType;

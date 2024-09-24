@@ -1,6 +1,7 @@
 import { ReactNode, useState } from "react";
 import { SelectorSettingType } from "../../../../types/selector";
 import usePlannerContext from "../../../../useContextHooks/usePlannerContext";
+import { INITIAL_SEMESTER_ID } from "../../../../constants/semesterData";
 
 interface Props<MetadataType> {
     handleFormDataChange: <K extends keyof SelectorSettingType>(key: string, value: SelectorSettingType[K]) => void;
@@ -18,8 +19,8 @@ const SelectorForm = <MetadataType extends { id: number; name: string; shortcut?
 
     const handleSelectDataChange = (value: number): void => {
         if (value === -1 && keyName === "semester") {
-            setSelectData(28);
-            handleFormDataChange("semester", 28);
+            setSelectData(INITIAL_SEMESTER_ID);
+            handleFormDataChange("semester", INITIAL_SEMESTER_ID);
             return;
         }
         setSelectData(value);
@@ -29,7 +30,7 @@ const SelectorForm = <MetadataType extends { id: number; name: string; shortcut?
     const getValidFormOption = (): ReactNode => {
         if (keyName === "semester") {
             return (
-                <option key={28} value="oferta">
+                <option key={INITIAL_SEMESTER_ID} value="oferta">
                     oferta
                 </option>
             );

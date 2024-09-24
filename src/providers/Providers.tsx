@@ -1,13 +1,14 @@
+import { ReactNode } from "react";
 import ErrorMessages from "../components/ErrorMessages/ErrorMessages";
 import ErrorMessagesProvider from "./ErrorMessagesProvider";
 import QueryProvider from "./QueryProvider";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
-interface IProviders {
-    children: JSX.Element;
+interface Props {
+    children: ReactNode;
 }
 
-const Providers = ({ children }: IProviders) => {
+const Providers = ({ children }: Props) => {
     return (
         <QueryProvider>
             <ErrorMessagesProvider>

@@ -5,7 +5,7 @@ const useResponseHandler = () => {
     const refreshMutation = useRefreshToken();
     const navigate = useNavigate();
 
-    const responseHadnler = async (response: Response): Promise<any> => {
+    const responseHandler = async (response: Response): Promise<any> => {
         if (response.ok) {
             if (containsData(response)) {
                 return await response.json();
@@ -24,7 +24,7 @@ const useResponseHandler = () => {
         throw new Error(`Something went wrong... Status code:${response.status}`);
     };
 
-    return responseHadnler;
+    return responseHandler;
 };
 
 const containsData = (response: Response): boolean => {

@@ -17,23 +17,24 @@ const DropableList = ({ children, containerName, handleUserSemesterChange }: Pro
 
     useEffect(() => {
         const elem = dragRef.current;
-        if (elem) {
-            return dropTargetForElements({
-                element: elem,
-
-                onDragEnter: () => {
-                    setIsDraggedOver(true);
-                },
-                onDragLeave: () => setIsDraggedOver(false),
-                onDrop: ({ source }) => {
-                    setIsDraggedOver(false);
-                    const courseId: number = Number(source.data.courseId);
-                    if (courseId) {
-                        handleUserSemesterChange(courseId, "add");
-                    }
-                },
-            });
+        if (!elem) {
+            return;
         }
+        return dropTargetForElements({
+            element: elem,
+
+            onDragEnter: () => {
+                setIsDraggedOver(true);
+            },
+            onDragLeave: () => setIsDraggedOver(false),
+            onDrop: ({ source }) => {
+                setIsDraggedOver(false);
+                const courseId: number = Number(source.data.courseId);
+                if (courseId) {
+                    handleUserSemesterChange(courseId, "add");
+                }
+            },
+        });
     }, [handleUserSemesterChange]);
 
     return (
