@@ -1,0 +1,50 @@
+{% extends "panel.html" %} 
+{% load static %}
+{% block title %} {{name}} {% endblock title %} 
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'panel/list_styles.css' %}">
+    <link rel="stylesheet" href="{% static 'panel/item.css' %}">
+{% endblock styles %}
+
+{% block header %} 
+    {% include "panel/includes/header.html" %} 
+{% endblock header %} 
+
+{% block content %} 
+
+{% if name %}
+<div class='list__wrapper'>
+    {% include "panel/includes/messages.html" %}
+    <form class='form' method="POST">
+        <h1 class='form__heading'>{{name}}:</h1>
+        {% csrf_token %}
+        <div class="form__wrapper">
+            <input class='form__search' type="text" name="search_value" id="search_value" />
+            <button class='form__submit' type="submit">
+                <img  src="{% static 'img/loop.svg'  %}" alt="Search" fill='white'/>
+            </button>
+        </div>
+    </form>
+    <div class='navigation'>
+        {% if page_obj.has_previous %}
+        <a class='navigation__link'  href="?page={{page_obj.previous_page_number }}">&lt;&lt;</a>
+        {% endif %} {% if page_obj.has_next %}
+        <a class='navigation__link'  href="?page={{ page_obj.next_page_number }}">&gt;&gt;</a>
+        {% endif %}
+    </div>
+    <ul class='list'>
+       {% if page_obj %}
+       {% for data in page_obj %}
+            {% include 'panel/includes/metadata_item.html' %}
+       {% endfor %}
+       {% else %} 
+        <h2 class='list__h2'>List is Empty</h2>
+       {% endif %}
+    </ul>
+</div>
+{% else %}
+<div class='list__empty' >
+    <h1 class='list__h1'>List is Empty</h1>
+</div>
+{% endif %} {% endblock content %}

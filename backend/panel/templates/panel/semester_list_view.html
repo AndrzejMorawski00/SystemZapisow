@@ -1,0 +1,42 @@
+{% extends "panel.html" %} 
+{% load static %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'panel/semester_list_view.css' %}">
+{% endblock styles %}
+
+{% block title %}Semesters{% endblock title %}
+
+{% block header %} 
+    {% include "panel/includes/header.html" %}
+{% endblock header %} 
+{% block content %} 
+{% include "panel/includes/messages.html" %}
+<form class='form' method='POST'>
+{%csrf_token %} 
+{% if semester_list %}
+
+<table class='table'>
+    <tr class='table__row'>
+        {% for column in column_names %}
+        <th class='table__header'>{{column}}</th>
+        {% endfor %}
+    </tr>
+    {% for semester in semester_list %}
+        {% include "panel/includes/semester_row.html" %}
+    {% endfor %}
+</table>
+
+{% else %}
+<div class='wrapper'>
+    <p class='wrapper__p'>You need to fetch semesters first</p>
+</div>
+
+{% endif %}
+{% if semester_list  %}
+<div class="form__wrapper">
+    <input class='form__submit' type="submit" value="Fetch Subjects from selected semesters">
+</div>
+{% endif %}
+</form>
+{% endblock content %}
