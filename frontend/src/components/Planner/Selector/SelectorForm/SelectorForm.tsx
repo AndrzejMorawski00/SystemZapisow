@@ -16,7 +16,7 @@ const SelectorForm = <MetadataType extends { id: number; name: string; shortcut?
 }: Props<MetadataType>) => {
     const currData = usePlannerContext();
     const [selectData, setSelectData] = useState<number>(currData[keyName]);
-
+    console.log(currData);
     const handleSelectDataChange = (value: number): void => {
         if (value === -1 && keyName === "semester") {
             setSelectData(INITIAL_SEMESTER_ID);

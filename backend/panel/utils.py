@@ -1,7 +1,9 @@
-import re
-from typing import List
+from typing import Dict, List
+from django.db import IntegrityError
 from django.http import HttpRequest
-from django.template.defaultfilters import slugify
+from .data_types import CourseDict
+from .models import Course, CourseTag, CourseEffect, CourseType, Semester
+from .site_crawler import SiteCrawler
 
 
 def has_permission(request: HttpRequest, groups: List[str]) -> bool:
@@ -13,78 +15,6 @@ def has_permission(request: HttpRequest, groups: List[str]) -> bool:
             name__in=groups).exists() else False
         return is_admin or mod
     return False
-
-# source https://djangosnippets.org/snippets/690/
-
-
-def unique_slugify(instance, value, slug_field_name='slug', queryset=None,
-                   slug_separator='-'):
-    """
-    Calculates and stores a unique slug of ``value`` for an instance.
-
-    ``slug_field_name`` should be a string matching the name of the field to
-    store the slug in (and the field to check against for uniqueness).
-
-    ``queryset`` usually doesn't need to be explicitly provided - it'll default
-    to using the ``.all()`` queryset from the model's default manager.
-    """
-    slug_field = instance._meta.get_field(slug_field_name)
-
-    slug = getattr(instance, slug_field.attname)
-    slug_len = slug_field.max_length
-
-    # Sort out the initial slug, limiting its length if necessary.
-    slug = slugify(value)
-    if slug_len:
-        slug = slug[:slug_len]
-    slug = _slug_strip(slug, slug_separator)
-    original_slug = slug
-
-    # Create the queryset if one wasn't explicitly provided and exclude the
-    # current instance from the queryset.
-    if queryset is None:
-        queryset = instance.__class__._default_manager.all()
-    if instance.pk:
-        queryset = queryset.exclude(pk=instance.pk)
-
-    # Find a unique slug. If one matches, at '-2' to the end and try again
-    # (then '-3', etc).
-    next = 1
-    while not slug or queryset.filter(**{slug_field_name: slug}):
-        slug = original_slug
-        end = '%s%s' % (slug_separator, next)
-        if slug_len and len(slug) + len(end) > slug_len:
-            slug = slug[:slug_len-len(end)]
-            slug = _slug_strip(slug, slug_separator)
-        slug = '%s%s' % (slug, end)
-        next += 1
-
-    setattr(instance, slug_field.attname, slug)
-
-
-def _slug_strip(value, separator='-'):
-    """
-    Cleans up a slug by removing slug separator characters that occur at the
-    beginning or end of a slug.
-
-    If an alternate separator is used, it will also replace any instances of
-    the default '-' separator with the new separator.
-    """
-    separator = separator or ''
-    if separator == '-' or not separator:
-        re_sep = '-'
-    else:
-        re_sep = '(?:-|%s)' % re.escape(separator)
-    # Remove multiple instances and if an alternate separator is provided,
-    # replace the default '-' separator.
-    if separator != re_sep:
-        value = re.sub('%s+' % re_sep, separator, value)
-    # Remove separator from the beginning and end of the slug.
-    if separator:
-        if separator != '-':
-            re_sep = re.escape(separator)
-        value = re.sub(r'^%s+|%s+$' % (re_sep, re_sep), '', value)
-    return value
 
 
 schema = '''{
@@ -119,3 +49,65 @@ schema = '''{
   ]
 }
 '''
+
+
+def has_metadata() -> bool:
+    has_tags = CourseTag.objects.exists()
+    has_effects = CourseEffect.objects.exists()
+    has_types = CourseType.objects.exists()
+    return all([has_effects, has_tags, has_types])
+
+
+def fetch_semester_data(selected_semesters: List[Semester]) -> int:
+    sc = SiteCrawler()
+    counter: int = 0
+    for semester in selected_semesters:
+        if semester.fetched:
+            continue
+        sc_response = sc.get_semester_subjects(semester.link)
+        counter += process_courses(sc_response, semester, fetch_ects=True)
+        semester.fetched = True
+        semester.save()
+    return counter
+
+
+def process_courses(course_data: List[CourseDict], semester: Semester, fetch_ects: bool) -> int:
+    counter: int = 0
+    sc = SiteCrawler()
+
+    for subject in course_data:
+        response_keys = ['id', 'name', 'courseType',
+                         'recommendedForFirstYear', 'effects', 'tags', 'url']
+        course_keys = ['pk', 'name', 'type',
+                       'recommended_for_first_year', 'effects', 'tags', 'url']
+        course_dict: Dict = {}
+        relations_dict: Dict = {}
+        course_dict = {}
+        for i, key in enumerate(response_keys):
+            if key in subject:
+                if key in ['courseType', 'effects', 'tags']:
+                    relations_dict[course_keys[i]] = subject[key]
+                else:
+                    course_dict[course_keys[i]] = subject[key]
+            else:
+                raise KeyError(f'Invalid key: {key}')
+        course_dict['ects'] = sc.get_subject_details(
+            subject['url']) if fetch_ects else subject['ects']
+        counter += create_course(course_dict, relations_dict, semester)
+    return counter
+
+
+def create_course(course_dict: Dict, relations_dict: Dict, semester: Semester) -> int:
+    tags = CourseTag.objects.filter(pk__in=relations_dict['tags'])
+    effects = CourseEffect.objects.filter(pk__in=relations_dict['effects'])
+    try:
+        course_type = CourseType.objects.get(pk=relations_dict['type'])
+        course = Course.objects.create(
+            **course_dict, type=course_type, semester=semester)
+        course.tags.add(*tags)
+        course.effects.add(*effects)
+        course.save()
+        return 1
+    except (CourseType.DoesNotExist, Course.MultipleObjectsReturned, IntegrityError) as e:
+        print(f'Exception: {e}')
+        return 0

@@ -7,7 +7,6 @@ class SemesterAdmin(admin.ModelAdmin):
     exclude = ('slug', )
 
 
-
 admin.site.register(Semester, SemesterAdmin)
 admin.site.register(Course)
 admin.site.register(CourseTag)

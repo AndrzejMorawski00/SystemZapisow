@@ -24,6 +24,13 @@
         {{semester_form.fetched}}
         <label class='form__label' for="fetched">Fetched?</label>
     </div>
+    {% if action != "Edit" %}
+    <div class='form__wrapper'>
+        <label class='form__label'  for="name">Custom PK:</label>
+        {{semester_form.custom_pk}}
+    </div>
+    {% endif %}
+
     <input class='form__submit' type="submit" value="{{action}}">
 </form>
 {% endblock content %}

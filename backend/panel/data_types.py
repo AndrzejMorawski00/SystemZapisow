@@ -32,3 +32,12 @@ class CourseDict(TypedDict):
 class CourseDataDict(TypedDict):
     semester: int
     courses: List[CourseDict]
+
+
+# Data Dicts
+
+
+class SemesterData(TypedDict):
+    pk: int
+    name: str
+    link: str

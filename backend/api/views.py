@@ -11,7 +11,8 @@ from django_filters.rest_framework import DjangoFilterBackend
 
 from .filters import CourseFilter
 from .pagination import StandardResultSetPagination
-from .serializers import CourseSerializer, SemesterSerializer, CourseTagSerializer, CourseEffectSerializer, CourseTypeSerializer, CourseReadOnlySerializer
+from .serializers import CourseSerializer, SemesterSerializer, CourseTagSerializer, \
+    CourseEffectSerializer, CourseTypeSerializer, CourseReadOnlySerializer
 from panel.models import Semester, CourseType, CourseTag, CourseEffect, Course
 
 from api.constants import api_endpoints
@@ -19,11 +20,11 @@ from api.constants import api_endpoints
 # Create your views here.
 
 
-def index(request: HttpRequest):
+def index(request: HttpRequest) -> HttpResponse:
     return render(request, 'api/home.html', {'api_endpoints': api_endpoints})
 
 
-class CourseTagListAPIView(generics.ListAPIView, ):
+class CourseTagListAPIView(generics.ListAPIView):
     serializer_class = CourseTagSerializer
     permission_classes = [AllowAny]
     queryset = CourseTag.objects.all()
@@ -89,7 +90,8 @@ class CourseListAPIView(generics.ListAPIView):
             try:
                 semester = Semester.objects.get(pk=semester_id)
                 return Course.objects.filter(semester=semester).order_by('name')
-            except Semester.DoesNotExist:
+            except Exception as e:
+                print(e)
                 return Course.objects.none()
         return Course.objects.none()
 

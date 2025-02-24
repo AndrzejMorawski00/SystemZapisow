@@ -1,4 +1,3 @@
-from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 
@@ -9,7 +8,7 @@ class RegisterForm(UserCreationForm):
         model = User
         fields = ['username', 'password1', 'password2']
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
 
         super().__init__(*args, **kwargs)
 

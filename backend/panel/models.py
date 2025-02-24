@@ -1,7 +1,7 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 
-from panel.utils import unique_slugify
+from panel.models_utils import unique_slugify
 
 # Create your models here.
 

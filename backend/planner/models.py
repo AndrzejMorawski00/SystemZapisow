@@ -1,9 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
 from panel.models import Course
-from panel.utils import unique_slugify
+from panel.models_utils import unique_slugify
 
 # Create your models here.
+
 
 class PlanTypes(models.TextChoices):
     ENG = 'Inżynierskie'

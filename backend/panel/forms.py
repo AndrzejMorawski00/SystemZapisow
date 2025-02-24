@@ -1,5 +1,5 @@
+from django import forms
 from django.forms import ModelForm
-
 from .models import Course, Semester
 
 
@@ -45,6 +45,8 @@ class CourseForm(ModelForm):
 
 
 class SemesterForm(ModelForm):
+    custom_pk = forms.IntegerField(required=False, min_value=0)
+
     class Meta:
         model = Semester
         fields = ['link', 'name', 'fetched']
@@ -62,4 +64,9 @@ class SemesterForm(ModelForm):
         self.fields["fetched"].widget.attrs.update({
             'class': 'form__checkbox',
             'id': 'fetched'
+        })
+
+        self.fields["custom_pk"].widget.attrs.update({
+            'class': 'form__input',
+            'id': 'custom_pk'
         })

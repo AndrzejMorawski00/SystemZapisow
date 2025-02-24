@@ -1,4 +1,4 @@
-from api.utils import get_initial_semester_id
+DEFAULT_SEMESTER_ID = "-1"  # Pass is as a string for simplicity
 
 api_endpoints = [
     {
@@ -32,7 +32,7 @@ api_endpoints = [
     {
         'name': 'Courses',
         'url': 'api:course-list-view',
-        'additional_data': get_initial_semester_id(),
+        'additional_data': DEFAULT_SEMESTER_ID,
         'list_path': 'api/courses/<int:semester_pk>/',
         'detailed_path': 'api/courses/<int:semester_pk>/<int:course_pk>/'
     }
