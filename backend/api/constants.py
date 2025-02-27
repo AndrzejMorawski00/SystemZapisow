@@ -1,4 +1,4 @@
-DEFAULT_SEMESTER_ID = "-1"  # Pass is as a string for simplicity
+DEFAULT_SEMESTER_ID = 0
 
 api_endpoints = [
     {

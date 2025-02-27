@@ -1,0 +1,10 @@
+services:
+  frontend:
+    container_name: systemzapisow-frontend
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+      target: prod
+    stdin_open: true
+    ports:
+      - "80:80"

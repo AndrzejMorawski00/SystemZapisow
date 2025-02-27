@@ -1,0 +1,45 @@
+.form {
+    padding-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.form__wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form__input {
+    font-size: 2.5rem;
+    letter-spacing: 1px;
+    padding: 1rem;
+    background-color: var(--input-background-color);
+    color: var(--foreground-color);
+    border: none;
+    outline: none;
+}
+
+.form__label {
+    font-size: 3rem;
+    color: var(--foreground-color);
+}
+
+.form__submit {
+    padding: 1rem 2rem;
+    font-size: 2.5rem;
+    letter-spacing: 1px;
+    background-color: var(--auth-button-color);
+    color: var(--foreground-color);
+    border: none;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.form__submit:hover {
+    background-color: var(--auth-button-color-hover);
+}
+
+
