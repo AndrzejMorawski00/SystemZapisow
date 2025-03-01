@@ -6,4 +6,4 @@ dist
 .github
 .git
 .gitignore
-
+.env.template

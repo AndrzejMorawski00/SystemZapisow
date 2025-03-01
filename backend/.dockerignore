@@ -25,4 +25,5 @@ web/media
 web/static/CACHE
 stats
 Dockerfile.backend
+.env.template
 docker-compose.yml
