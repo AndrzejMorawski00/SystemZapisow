@@ -67,7 +67,7 @@ const PlanForm = ({ handleFormOpenClose, currPlan }: Props) => {
                 id="name"
                 value={formData.name}
                 onChange={(e) => handleFormDataChange(e.target.id, e.target.value)}
-                placeholder="name"
+                placeholder="Nowy Plan"
             />
             <select
                 className="FormInput focus:outline-none "

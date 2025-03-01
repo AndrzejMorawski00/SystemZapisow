@@ -117,7 +117,5 @@ dist-ssr
 *.sln
 *.sw?
 
-todo
-/screenshots
 README.md
 staticfiles
