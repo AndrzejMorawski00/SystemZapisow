@@ -116,6 +116,4 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-
-README.md
 staticfiles
