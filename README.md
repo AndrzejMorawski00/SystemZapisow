@@ -2,7 +2,7 @@
 * This repository contains merged code of backend and frontend apps. The code is based on the original versions of these applications with slight improvements and the addition of Docker setup.
 
 * Backend Repository <a href="https://github.com/AndrzejMorawski00/SystemZapisowAPI">(Link)</a>
-* Frontend Repository <a href="https://github.com/AndrzejMorawski00/SystemZapisowAPI">(Link)</a>
+* Frontend Repository <a href="https://github.com/AndrzejMorawski00/SystemZapisowFrontend">(Link)</a>
 
 ## SystemZapisow API 
 * The application retrieves and manages data from the university enrollment system. It acts as an API for the SystemZapisow frontend application, where users can plan their degree course. It allows data modification and stores information about courses and plans created by users.
@@ -51,7 +51,7 @@
 ## Prerequisites
 * Before setting up the application, make sure you have **Docker** and **Docker Compose** installed on your machine.
  
-## Setup Instructions
+<!-- ## Setup Instructions
 1. Clone GitHub Repository:
     ```
     git clone git@github.com:AndrzejMorawski00/SystemZapisow.git
@@ -70,6 +70,26 @@
     ```
     docker-compose -f .\frontend\docker-compose.yml up -d
     ```
+## Access apps:
+* To access backend app navigate to: http://localhost:8000 and login as a superuser to access panel.
+* To access frontend app navigate to: http://localhost -->
+
+## Setup Instructions
+1. Clone GitHub Repository:
+    ```
+    git clone git@github.com:AndrzejMorawski00/SystemZapisow.git
+    ```
+2. Setup ``.env`` file:
+    * Create your own ``.env`` file next to existing ``.env.template`` file, or copy the content of the template into the ``.env`` file.
+3. Run app:
+    ```
+    docker-compose -f .\docker-compose.yml up -d
+    ```
+4. Create a superuser for the backend app and follow instructions:
+    ```
+    docker exec -it systemzapisow-backend python manage.py createsuperuser
+    ```
+
 ## Access apps:
 * To access backend app navigate to: http://localhost:8000 and login as a superuser to access panel.
 * To access frontend app navigate to: http://localhost

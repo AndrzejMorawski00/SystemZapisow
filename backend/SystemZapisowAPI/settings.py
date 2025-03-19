@@ -13,7 +13,6 @@ SECRET_KEY = os.getenv("SECRET_KEY", get_random_secret_key())
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split(',')
 CSRF_TRUSTED_ORIGINS = os.getenv("CSRF_TRUSTED_ORIGINS", "").split(',')
 
-
 # Application definition
 
 INSTALLED_APPS = [
