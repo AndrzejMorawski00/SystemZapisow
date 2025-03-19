@@ -51,29 +51,6 @@
 ## Prerequisites
 * Before setting up the application, make sure you have **Docker** and **Docker Compose** installed on your machine.
  
-<!-- ## Setup Instructions
-1. Clone GitHub Repository:
-    ```
-    git clone git@github.com:AndrzejMorawski00/SystemZapisow.git
-    ```
-2. Setup ``.env`` files:
-    * For both **backend** and **frontend** apps, create your own ``.env`` files next to existing ``.env.template`` files, or copy the content of the templates into the ``.env`` files.
-3. Run backend app:
-    ```
-    docker-compose -f .\backend\docker-compose.yml up -d
-    ```
-4. Create a superuser for the backend app and follow instructions:
-    ```
-    docker exec -it systemzapisow-backend python manage.py createsuperuser
-    ```
-5. Run frontend app:
-    ```
-    docker-compose -f .\frontend\docker-compose.yml up -d
-    ```
-## Access apps:
-* To access backend app navigate to: http://localhost:8000 and login as a superuser to access panel.
-* To access frontend app navigate to: http://localhost -->
-
 ## Setup Instructions
 1. Clone GitHub Repository:
     ```
